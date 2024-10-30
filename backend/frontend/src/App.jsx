@@ -1,5 +1,6 @@
 import React from "react";
 import './output.css';
+import studentimg from './assets/student.png';
 
 import Navbar from "./navbar";
 const HomePage = () => {
@@ -10,24 +11,43 @@ const HomePage = () => {
         <Navbar/>
     
       {/* Hero Section */}
-      <section className="bg-blue-500 text-white p-10">
-        <div className="container mx-auto text-center">
-          <h1 className="text-4xl md:text-5xl font-bold mb-4">
-            Welcome to Your Learning Hub
-          </h1>
-          <p className="text-lg md:text-xl">
-            Connect, learn, and grow with your teachers and peers!
-          </p>
-          <button className="mt-6 px-8 py-3 bg-white text-blue-500 font-semibold rounded-full shadow-md hover:bg-blue-100">
-            Get Started
-          </button>
+      <section className=" text-white p-6">
+        <div className="border border-red-500 flex justify-between items-center">
+            <div className="flex-1 text-blue-500 flex ">
+                <div className="flex flex-col">
+
+                    <div className=" text-gray-500">
+
+                        Discover the Future
+                    </div>
+                    <div className=" text-gray-900">
+
+                        Connecting Students and Tutors
+                    </div>
+                </div> 
+            </div>
+            <div className=" w-2/3 flex justify-end items-end">
+                <div className="w- overflow-hidden">
+
+                    <img
+                    src={studentimg}
+                    alt="Student"
+                    className="object-cover"
+                    style={{height: "700px", width: "900px"}}
+                    />
+
+                </div>
+            </div>
+
+
         </div>
+        
       </section>
 
       {/* Featured Classes */}
       <section className="py-10">
         <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold text-center mb-6">
+          <h2 className="text-3xl font-bold text-cente6r mb-6">
             Featured Classes
           </h2>
           <div className="grid gap-6 md:grid-cols-3">
