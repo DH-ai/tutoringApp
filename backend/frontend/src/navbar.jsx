@@ -37,11 +37,11 @@ const Navbar = () => {
               </div>
             </div>
           </div>
-          <div className="flex-1 justify-center m-4">
+          <div className="flex-1 justify-center mt-4">
             <div className="flex justify-end items-center">
               {!isLogged ? (
                 <FaUserCircle
-                  className="text-2xl text-blue-600 hover:opacity-30"
+                  className="text-3xl text-blue-600 hover:opacity-30 "
                   onClick={() => login("","",setIsLogged)}
                 />
               ) : (
