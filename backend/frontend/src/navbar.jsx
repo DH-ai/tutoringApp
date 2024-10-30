@@ -3,8 +3,14 @@ import { useState } from "react";
 import { FaUserCircle } from "react-icons/fa";
 // import './navbar.css'; // Make sure to create and style this CSS file
 import "./input.css";
+
+import { login } from "./login-handler";
+
+
+
+
 const Navbar = () => {
-//   const [isLogged, setIsLogged] = useState(false);
+  const [isLogged, setIsLogged] = useState(false);
 
   return (
     <>
@@ -31,21 +37,19 @@ const Navbar = () => {
               </div>
             </div>
           </div>
-          <div className="flex-1 justify-end">
-          <FaUserCircle className="text-2xl text-blue-600 hover:opacity-30" />
-
-            {/* {isLogged ? (
-              <>
-                <FaUserCircle className="text-2xl text-blue-600" />
-                <button onClick={handleLogout} className="text-blue-600">
-                  Logout
-                </button>
-              </>
-            ) : (
-              <button onClick={handleLogin} className="text-blue-600">
-                Sign In
-              </button>
-            )} */}
+          <div className="flex-1 justify-center m-4">
+            <div className="flex justify-end items-center">
+              {!isLogged ? (
+                <FaUserCircle
+                  className="text-2xl text-blue-600 hover:opacity-30"
+                  onClick={() => login("","",setIsLogged)}
+                />
+              ) : (
+                
+                  <div className="flex items-center space-x-2">sadsad</div>
+                
+              )}
+            </div>
           </div>
         </div>
       </nav>
