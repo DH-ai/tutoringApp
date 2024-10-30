@@ -14,7 +14,6 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "description": "",
   "devDependencies": {
     "@vitejs/plugin-react": "^4.3.1",
     "eslint": "^9.9.1",
@@ -22,10 +21,12 @@
     "eslint-plugin-react": "^7.37.1",
     "globals": "^15.9.0",
     "prettier": "^3.3.3",
+    "tailwindcss": "^3.4.14",
     "vite": "^5.4.10"
   },
   "dependencies": {
     "react": "^18.3.1",
     "react-dom": "^18.3.1"
-  }
+  },
+  "description": ""
 }
