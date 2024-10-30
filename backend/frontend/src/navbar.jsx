@@ -10,18 +10,18 @@ const Navbar = () => {
             <a href="/" className="text-4xl font-semibold capitalize">Tutorite</a>
           </div>
           <div className="text-right m-4 w-1/3" id="">
-            <div className="flex justify-around items-center space-x-1 font-sans">
-              <div className="">
+            <div className="flex justify-around items-center space-x-1 text-l">
+              <div className="hover:underline hover:text-blue-300">
                 <a href="/home">Home</a>
                 
               </div>
-              <div>
+              <div className="hover:underline hover:text-blue-300">
                 <a href="/about">About</a>
               </div>
-              <div>
+              <div className="hover:underline hover:text-blue-300">
                 <a href="/services">Services</a>
               </div>
-              <div>
+              <div className="hover:underline hover:text-blue-300">
                 <a href="/contact">Contact</a>
               </div>
             </div>
