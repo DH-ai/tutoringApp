@@ -5,13 +5,13 @@ const Navbar = () => {
   return (
     <>
       <nav>
-        <div className="flex justify-around items-center ">
-          <div>
+        <div className="flex justify-evenly items-stretch ">
+          <div className="justify-self-start">
             <a href="/" className="text-4xl font-semibold capitalize">Tutorite</a>
           </div>
           <div className="text-right m-4" id="">
-            <div className="flex ">
-              <div>
+            <div className="flex justify-between items-center space-x-8 hover:underline">
+              <div className="">
                 <a href="/home">Home</a>
                 
               </div>
