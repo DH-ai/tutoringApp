@@ -12,15 +12,16 @@ const HomePage = () => {
     
       {/* Hero Section */}
       <section className=" text-white p-6">
-        <div className="border border-red-500 flex justify-between items-center">
+        <div className="border border-red-500 flex justify-between items-start">
             <div className="flex-1 text-blue-500 flex ">
-                <div className="flex flex-col">
+                <div className="flex flex-col justify-center">
 
-                    <div className=" text-gray-500">
+                    <div className=" text-blue-500 mt-32 text-4xl mx-10 font-thin">
 
-                        Discover the Future
+                        Discover the <br></br>
+                        Future
                     </div>
-                    <div className=" text-gray-900">
+                    <div className=" text-gray-900 mx-10 my-10">
 
                         Connecting Students and Tutors
                     </div>
