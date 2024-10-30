@@ -1,31 +1,33 @@
 import React from "react";
 // import './navbar.css'; // Make sure to create and style this CSS file
-import "./output.css";
+import "./input.css";
 const Navbar = () => {
   return (
     <>
-      <nav >
-        <div className="flex justify-around items-baseline bg-slate-100">
+      <nav>
+        <div className="flex justify-around items-baseline ">
           <div>
-
-            <a href="/">Tutorite</a>
+            <a href="/" className="text-4xl font-light capitalize">Tutorite</a>
           </div>
-          <div className="" id="">
-
-            <ul className="flex ">
-              <li>
+          <div className="text-left" id="">
+            <div className="flex justify-between items-center">
+              <div>
                 <a href="/home">Home</a>
-              </li>
-              <li>
+                
+              </div>
+              <div>
                 <a href="/about">About</a>
-              </li>
-              <li>
+              </div>
+              <div>
                 <a href="/services">Services</a>
-              </li>
-              <li>
+              </div>
+              <div>
                 <a href="/contact">Contact</a>
-              </li>
-            </ul>
+              </div>
+            </div>
+          </div>
+          <div className="bg-black text-right">
+            <a href="/login">Login</a>
           </div>
         </div>
       </nav>
