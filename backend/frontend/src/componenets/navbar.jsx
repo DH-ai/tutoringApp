@@ -2,9 +2,9 @@ import React from "react";
 import { useState } from "react";
 import { FaUserCircle } from "react-icons/fa";
 // import './navbar.css'; // Make sure to create and style this CSS file
-import "./input.css";
+// import "./input.css";
 
-import { login } from "./login-handler";
+import { login } from "../login-handler";
 
 const Navbar = () => {
   const [isLogged, setIsLogged] = useState(false);

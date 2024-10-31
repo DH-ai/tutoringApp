@@ -42,12 +42,14 @@ INSTALLED_APPS = [
     'sessions_api',
     'server',
     'webchatapi',
-    'rest_framework',
-    'rest_framwework_simplejwt',
+    'corsheaders'
+
+    
 
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware', 
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -56,6 +58,25 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:5173",  # React frontend (development)
+]
+
+CORS_ALLOW_CREDENTIALS = True # This is needed in order to allow the frontend to send cookies to the backend.
+
+CORS_ALLOW_HEADERS = [
+    'content-type',
+    'authorization',
+]
+
+CORS_ALLOW_METHODS = [
+    'GET',
+    'POST',
+    'PUT',
+    'DELETE',
+
+] # If not specified, all methods will be allowed by default. Needed for the frontend to send requests with methods other than GET and POST.
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
