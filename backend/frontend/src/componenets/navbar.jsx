@@ -34,16 +34,16 @@ const Navbar = () => {
               </div>
             </div>
           </div>
-          <div className="flex-1 justify-center ">
-            <div className="flex justify-end items-center">
+          <div className="flex-1  ">
+            <div className="flex items-center justify-end h-full">
               {isLogged ? (
-                <FaUserCircle
-                  className="text-3xl text-blue-600 hover:cursor-pointer mr-10 "
-                  onClick={() => login("", "", setIsLogged)}
-                />
+                <FaUserCircle className="text-3xl text-blue-600 hover:cursor-pointer mx-6 " />
               ) : (
-                <div className="flex items-center space-x-2 mr-6 my-2">
-                  <button className="border border-3 border-blue-500 rounded-md transition-all text-xl bg-blue-100 text-blue-500 px-2 py-1 hover:bg-blue-500 hover:text-white">
+                <div className="space-x-2 mr-6 my-2">
+                  <button
+                    className="border border-3 border-blue-500 rounded-md transition-all text-xl bg-blue-100 text-blue-500 px-2 py-1 hover:bg-blue-500 hover:text-white"
+                    onClick={() => login("", "", setIsLogged)}
+                  >
                     <a hred="/login">Login</a>
                   </button>
                 </div>
