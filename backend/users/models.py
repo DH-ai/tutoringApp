@@ -16,4 +16,5 @@ class auth(models.Model):
 
 
     def __str__(self):
-        return self.username
+        # write a good string representation for the model
+        return f"{self.first_name} {self.last_name} ({self.username})"
