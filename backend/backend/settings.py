@@ -42,6 +42,8 @@ INSTALLED_APPS = [
     'sessions_api',
     'server',
     'webchatapi',
+    'rest_framework',
+    'rest_framwework_simplejwt',
 
 ]
 
@@ -54,6 +56,12 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ),
+}
 
 ROOT_URLCONF = 'backend.urls'
 STATIC_URL = 'static/'
