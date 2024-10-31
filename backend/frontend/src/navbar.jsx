@@ -6,9 +6,6 @@ import "./input.css";
 
 import { login } from "./login-handler";
 
-
-
-
 const Navbar = () => {
   const [isLogged, setIsLogged] = useState(false);
 
@@ -37,17 +34,19 @@ const Navbar = () => {
               </div>
             </div>
           </div>
-          <div className="flex-1 justify-center mt-4">
+          <div className="flex-1 justify-center ">
             <div className="flex justify-end items-center">
-              {!isLogged ? (
+              {isLogged ? (
                 <FaUserCircle
-                  className="text-3xl text-blue-600 hover:opacity-30 "
-                  onClick={() => login("","",setIsLogged)}
+                  className="text-3xl text-blue-600 hover:cursor-pointer mr-10 "
+                  onClick={() => login("", "", setIsLogged)}
                 />
               ) : (
-                
-                  <div className="flex items-center space-x-2">sadsad</div>
-                
+                <div className="flex items-center space-x-2 mr-6 my-2">
+                  <button className="border border-3 border-blue-500 rounded-md transition-all text-xl bg-blue-100 text-blue-500 px-2 py-1 hover:bg-blue-500 hover:text-white">
+                    <a hred="/login">Login</a>
+                  </button>
+                </div>
               )}
             </div>
           </div>

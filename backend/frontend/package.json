@@ -9,7 +9,7 @@
     "preview": "vite preview",
     "lint": "eslint",
     "format": "prettier --write \"src/**/*.{js,jsx}\"",
-    "build:css": "npx tailwindcss -i ./src/input.css -o ./src/output.css --watch ",
+    "build:css": "npx tailwindcss -i ./src/input.css -o ./src/output.css  ",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
