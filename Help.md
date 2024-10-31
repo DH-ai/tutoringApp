@@ -965,3 +965,153 @@ To complete your Teacher-Student Tutoring App with a **React frontend** and **Dj
 ### **Summary**
 
 By following this structured approach, you’ll ensure that the core features—user authentication, scheduling, and live chat—are implemented efficiently. This way, the project can be completed faster by leveraging appropriate libraries, frameworks, and deployment tools, keeping the development focused and minimizing time spent on setup and integration.
+
+# Implmenting react router in subfiles not the main file using context 
+
+Yes, you can definitely implement route protection using React Router in your **Teacher** or **Student Dashboard** subcomponents to ensure that only authenticated users can access those routes. If a user tries to access these routes without being authenticated, you can redirect them to the login page or show a message indicating they need to log in. Here’s how you can achieve this step by step:
+
+### Step 1: Create an Authentication Context
+
+To manage user authentication status globally, you can create a React context. This will help you determine if a user is authenticated throughout your application.
+
+#### Create `AuthContext.js`
+
+```javascript
+import React, { createContext, useContext, useState } from 'react';
+
+const AuthContext = createContext();
+
+export const AuthProvider = ({ children }) => {
+    const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+    const login = () => setIsAuthenticated(true);
+    const logout = () => setIsAuthenticated(false);
+
+    return (
+        <AuthContext.Provider value={{ isAuthenticated, login, logout }}>
+            {children}
+        </AuthContext.Provider>
+    );
+};
+
+export const useAuth = () => useContext(AuthContext);
+```
+
+### Step 2: Wrap Your App with the AuthProvider
+
+In your `index.js` or `App.js`, wrap your application with the `AuthProvider` so that the authentication context is available throughout your component tree.
+
+#### Update `index.js`
+
+```javascript
+import React from 'react';
+import ReactDOM from 'react-dom';
+import App from './App';
+import { AuthProvider } from './AuthContext';
+
+ReactDOM.render(
+    <AuthProvider>
+        <App />
+    </AuthProvider>,
+    document.getElementById('root')
+);
+```
+
+### Step 3: Create a Protected Route Component
+
+Create a higher-order component (HOC) that will check if a user is authenticated before rendering the requested component.
+
+#### Create `ProtectedRoute.js`
+
+```javascript
+import React from 'react';
+import { Route, Redirect } from 'react-router-dom';
+import { useAuth } from './AuthContext';
+
+const ProtectedRoute = ({ component: Component, ...rest }) => {
+    const { isAuthenticated } = useAuth();
+
+    return (
+        <Route
+            {...rest}
+            render={props =>
+                isAuthenticated ? (
+                    <Component {...props} />
+                ) : (
+                    <Redirect to="/login" />
+                )
+            }
+        />
+    );
+};
+
+export default ProtectedRoute;
+```
+
+### Step 4: Use ProtectedRoute in Your App
+
+In your main `App.js` file, use the `ProtectedRoute` component for routes that require authentication.
+
+#### Update `App.js`
+
+```javascript
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import HomePage from './components/HomePage';
+import Login from './components/Login';
+import StudentDashboard from './components/Dashboard/StudentDashboard';
+import TeacherDashboard from './components/Dashboard/TeacherDashboard';
+import ProtectedRoute from './ProtectedRoute';
+
+function App() {
+    return (
+        <Router>
+            <Switch>
+                <Route path="/" exact component={HomePage} />
+                <Route path="/login" component={Login} />
+                <ProtectedRoute path="/student-dashboard" component={StudentDashboard} />
+                <ProtectedRoute path="/teacher-dashboard" component={TeacherDashboard} />
+            </Switch>
+        </Router>
+    );
+}
+
+export default App;
+```
+
+### Step 5: Handle Authentication in Login Component
+
+Make sure that when users log in successfully, you update the authentication state.
+
+#### Example Login Logic (in `Login.js`)
+
+```javascript
+import React from 'react';
+import { useAuth } from '../AuthContext';
+
+const Login  = () => {
+    const { login } = useAuth();
+
+    const handleLogin = () => {
+        // Implement your login logic here (API call, etc.)
+        // On successful login:
+        login();
+    };
+
+    return (
+        <div>
+            <h2>Login</h2>
+            <button onClick={handleLogin}>Login</button>
+        </div>
+    );
+};
+
+export default Login;
+```
+
+### Summary
+
+With this setup:
+
+- Users trying to access `/student-dashboard` or `/teacher-dashboard` without being authenticated will be redirected to the `/login` page.
+- Once authenticated, users can access the protected routes.
+- You can further enhance this system by adding user role checks, redirecting to the last accessed page after login, and incorporating more robust authentication methods.
