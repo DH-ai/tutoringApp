@@ -34,7 +34,7 @@ const HomePage = () => {
                     src={studentimg}
                     alt="Student"
                     className="object-cover"
-                    style={{height: "700px", width: "900px"}}
+                    style={{height: "50rem", width: "90rem"}}
                     />
 
                 </div>
