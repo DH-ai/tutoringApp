@@ -1,10 +1,8 @@
 import React from "react";
 import { useState } from "react";
 import { FaUserCircle } from "react-icons/fa";
-// import './navbar.css'; // Make sure to create and style this CSS file
-// import "./input.css";
-
 import { login } from "../login-handler";
+import { Link } from "react-router-dom";
 
 const Navbar = () => {
   const [isLogged, setIsLogged] = useState(false);
@@ -39,12 +37,13 @@ const Navbar = () => {
               {isLogged ? (
                 <FaUserCircle className="text-3xl text-blue-600 hover:cursor-pointer mx-6 " />
               ) : (
+                // sum more functionalitie may be
                 <div className="space-x-2 mr-6 my-2">
                   <button
                     className="border border-3 border-blue-500 rounded-md transition-all text-xl bg-blue-100 text-blue-500 px-2 py-1 hover:bg-blue-500 hover:text-white"
                     onClick={() => login("", "", setIsLogged)}
                   >
-                    <a hred="/login">Login</a>
+                    <Link to="/login">Login</Link>
                   </button>
                 </div>
               )}

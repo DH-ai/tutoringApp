@@ -2,6 +2,7 @@ import React from "react";
 import "./output.css";
 import studentimg from "./assets/student.png";
 
+
 import Navbar from "./componenets/navbar";
 const HomePage = () => {
   return (
