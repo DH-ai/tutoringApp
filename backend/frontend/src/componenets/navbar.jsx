@@ -19,16 +19,16 @@ const Navbar = () => {
           <div className=" m-4 w-1/3" id="">
             <div className="flex justify-around items-center space-x-1 text-l">
               <div className="hover:underline hover:text-blue-300">
-                <a href="/home">Home</a>
+                <Link to="/">Home</Link>
               </div>
               <div className="hover:underline hover:text-blue-300">
-                <a href="/about">About</a>
+                <Link to="/about">About</Link>
               </div>
               <div className="hover:underline hover:text-blue-300">
-                <a href="/services">Services</a>
+                <Link to="/services">Services</Link>
               </div>
               <div className="hover:underline hover:text-blue-300">
-                <a href="/contact">Contact</a>
+                <Link to="/contact">Contact</Link>
               </div>
             </div>
           </div>

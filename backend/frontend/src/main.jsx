@@ -4,6 +4,9 @@ import {BrowserRouter,Routes,Route } from 'react-router-dom';
 import App from './App';
 import Login from './componenets/Login';
 import Profile from './componenets/profile';
+import ServiceWorker from './pages/services';
+import AboutUs from './pages/About';
+import ContactUs from './pages/contact';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
     // const [authToken, setAuthToken] = useState(null);
@@ -69,6 +72,9 @@ ReactDOM.createRoot(document.getElementById('root')).render(
                 <Route path="/" element={<App />} />
                 <Route path="/login" element={<Login/>} />
                 <Route path="/profile" element={<Profile/>} />
+                <Route path="/services" element={<ServiceWorker/>} />
+                <Route path="/about" element={<AboutUs/>} />
+                <Route path="/contact" element={<ContactUs/>} />
             </Routes>
         </BrowserRouter>
     </React.StrictMode>
