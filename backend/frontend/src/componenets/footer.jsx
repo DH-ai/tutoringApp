@@ -2,8 +2,8 @@ import React from 'react';
 
 function Footer() {
   return (
-    <footer className="bg-gray-200 text-gray-600 py-8">
-      <div className="container  px-6 md:flex md:justify-between">
+    <footer className=" bg-white  text-gray-600 py-8 w-full ">
+      <div className="container  px-6 md:flex md:justify-between ">
         
         {/* Logo and Description */}
         <div className="mb-6 md:mb-0">
