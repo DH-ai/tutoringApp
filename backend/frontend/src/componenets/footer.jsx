@@ -2,8 +2,8 @@ import React from 'react';
 
 function Footer() {
   return (
-    <footer className=" bg-white  text-gray-600 py-8 w-full ">
-      <div className="container  px-6 md:flex md:justify-between ">
+    <footer className=" bg-white  text-gray-600 pt-4 w-full ">
+      <div className="container my-4 px-6 md:flex md:justify-between ">
         
         {/* Logo and Description */}
         <div className="mb-6 md:mb-0">
@@ -54,7 +54,7 @@ function Footer() {
       </div>
       
       {/* Bottom Footer */}
-      <div className="mt-8 border-t border-gray-700 pt-4 text-center text-gray-400 text-sm">
+      <div className=" border-t border-gray-200 py-2 text-center text-gray-400 text-sm">
         © {new Date().getFullYear()} EduApp. All rights reserved.
       </div>
     </footer>
