@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom/client';
 import {BrowserRouter,Routes,Route } from 'react-router-dom';
 import App from './App';
 import Login from './componenets/Login';
+import Profile from './componenets/profile';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
     // const [authToken, setAuthToken] = useState(null);
@@ -67,6 +68,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
             <Routes>
                 <Route path="/" element={<App />} />
                 <Route path="/login" element={<Login/>} />
+                <Route path="/profile" element={<Profile/>} />
             </Routes>
         </BrowserRouter>
     </React.StrictMode>
