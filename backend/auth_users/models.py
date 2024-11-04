@@ -18,8 +18,8 @@ class User (AbstractUser):
     country = models.CharField(max_length=50)
     bio = models.CharField(max_length=50)
     subjectsInterested = models.CharField(max_length=50,blank=True)
-    is_student = models.BooleanField(blank=True)
-    is_teacher = models.BooleanField(blank=True)
+    is_student = models.BooleanField(default=False,blank=True)
+    is_teacher = models.BooleanField(default=False,blank=True)
     def __str__(self):
         return self.username
 
