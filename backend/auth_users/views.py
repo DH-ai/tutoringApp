@@ -82,9 +82,9 @@ class UserPublicProfileView(generics.RetrieveAPIView):
         return User.objects.filter(is_teacher=True)  # Assuming `is_teacher` marks teacher profiles.
     
 class TeacherListView(generics.ListAPIView):
-    serializer_class = TeacherSerializer
+    serializer_class = UserPublicProfileSerializer
     permission_classes = [AllowAny]
 
     def get_queryset(self):
         return User.objects.filter(is_teacher=True)
-
+\
