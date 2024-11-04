@@ -10,6 +10,26 @@ from .serializers import SessionSerializer, SessionBookingSerializer
 from rest_framework.permissions import AllowAny
 
 
+class CreateSessionView(generics.CreateAPIView):
+    '''Create a new session
+    { REEQUEST BODY
+        "teacher_id": "string",
+        "title": "string",
+        "description": "string",
+        "date": "YYYY-MM-DD",
+        "start_time": "HH:MM",
+        "end_time": "HH:MM",
+        "max_students": "integer"
+    }
+    '''
+
+    serializer_class = SessionSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+    def perform_create(self, serializer):
+        serializer.save(teacher=self.request.user)
+
+
 class AvailableSessionsListView(generics.ListAPIView):
     """t all available sessions that have not reached the maximum number of students.
     """
@@ -25,9 +45,6 @@ class AvailableSessionsListView(generics.ListAPIView):
             queryset = queryset.filter(teacher__id=teacher_id)
 
         return queryset
-
-
-class CreateSessionView(generics.CreateAPIView):
     serializer_class = SessionSerializer
     permission_classes = [permissions.IsAuthenticated]
 
@@ -38,6 +55,7 @@ class CreateSessionView(generics.CreateAPIView):
 class BookSessionView(generics.CreateAPIView):
     queryset = SessionBooking.objects.all()
     serializer_class = SessionBookingSerializer
+    permission_classes = [permissions.IsAuthenticated]
 
     def create(self, request, *args, **kwargs):
         # Call the serializer's validation and creation
