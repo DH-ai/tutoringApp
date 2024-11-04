@@ -7,6 +7,7 @@ import Profile from './componenets/profile';
 import ServiceWorker from './pages/services';
 import AboutUs from './pages/About';
 import ContactUs from './pages/contact';
+import StudentDashboard from './pages/StudentDashboard';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
     // const [authToken, setAuthToken] = useState(null);
@@ -75,6 +76,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
                 <Route path="/services" element={<ServiceWorker/>} />
                 <Route path="/about" element={<AboutUs/>} />
                 <Route path="/contact" element={<ContactUs/>} />
+                <Route path = "/dashboard" element={<StudentDashboard/>}/>
             </Routes>
         </BrowserRouter>
     </React.StrictMode>
