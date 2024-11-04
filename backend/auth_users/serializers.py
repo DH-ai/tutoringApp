@@ -43,13 +43,22 @@ class UserSerializer(serializers.ModelSerializer):
 class UserUpdateSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ('username', 'email', 'is_student', 'is_teacher')  # Allow updates to these fields
+        fields = ('username', 'email','first_name', 'last_name', 'phone', 'address', 'city', 'state', 'zipcode', 'country', 'bio', 'subjectsInterested', 'is_student', 'is_teacher')  # Allow updates to these fields
 
     def update(self, instance, validated_data):
+
         instance.username = validated_data.get('username', instance.username)
         instance.email = validated_data.get('email', instance.email)
-        instance.is_student = validated_data.get('is_student', instance.is_student)
-        instance.is_teacher = validated_data.get('is_teacher', instance.is_teacher)
+        instance.first_name = validated_data.get('first_name', instance.first_name)
+        instance.last_name = validated_data.get('last_name', instance.last_name)
+        instance.phone = validated_data.get('phone', instance.phone)
+        instance.address = validated_data.get('address', instance.address)
+        instance.city = validated_data.get('city', instance.city)
+        instance.state = validated_data.get('state', instance.state)
+        instance.zipcode = validated_data.get('zipcode', instance.zipcode)
+        instance.country = validated_data.get('country', instance.country)
+        instance.bio = validated_data.get('bio', instance.bio)
+        instance.subjectsInterested = validated_data.get('subjectsInterested', instance.subjectsInterested)
         instance.save()
         return instance
 

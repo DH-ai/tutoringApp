@@ -16,7 +16,12 @@ class AvailableSessionsListView(generics.ListAPIView):
 
     def get_queryset(self):
         queryset = Session.objects.annotate(num_bookings=Count('bookings')).filter(num_bookings__lt=F('max_students'))
-        teacher_id = self.request.query_params.get('teacher_id')
+        try:
+            teacher = self.request.user
+            queryset = queryset.exclude(teacher=teacher)
+        except:
+            teacher_id = self.request.query_params.get('teacher_id')
+
         
         if teacher_id:
             queryset = queryset.filter(teacher__id=teacher_id)

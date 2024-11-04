@@ -21,5 +21,6 @@ urlpatterns = [
     # path('', include('server.urls')),
     path('admin/', admin.site.urls),
     path('api/auth/', include('auth_users.urls')),
+    path('api/sessions/', include('sessionsbookingapi.urls')),
 
 ]

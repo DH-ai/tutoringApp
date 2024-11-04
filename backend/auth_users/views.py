@@ -30,6 +30,7 @@ class UserRegisterView(generics.CreateAPIView):
         serializer.is_valid(raise_exception=True)
         user = serializer.save()
         refresh = RefreshToken.for_user(user)
+        Token.objects.create(user=user)
         return Response({
             "message": "User registered successfully",
             "refresh": str(refresh),
@@ -49,12 +50,17 @@ class UserLoginView(APIView):
         username = request.data.get('username')
         password = request.data.get('password')
         user = authenticate(request, username=username, password=password)
+
         if user is not None:
+
+            token, created = Token.objects.get_or_create(user=user)
+
             refresh = RefreshToken.for_user(user)
             return Response({
                 'refresh': str(refresh),
                 'access': str(refresh.access_token),
-                'user_id': user.id
+                'user_id': user.id,
+                'token': token.key
             })
         else:
             return Response({"detail": "Invalid credentials"}, status=status.HTTP_401_UNAUTHORIZED)
