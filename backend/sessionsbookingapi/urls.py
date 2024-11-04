@@ -1,11 +1,11 @@
-from django.urls import path
-from .views import AvailableSessionsListView, BookSessionView, CancelBookingView, UpdateSessionView, CreateSessionView
+from django.urls import path, include
+from rest_framework.routers import DefaultRouter
+from .views import SessionViewSet, SessionBookingViewSet
+
+router = DefaultRouter()
+router.register(r'sessions', SessionViewSet)
+router.register(r'bookings', SessionBookingViewSet)
 
 urlpatterns = [
-    path('create/', CreateSessionView.as_view(), name='create-session'),
-    
-    path('book/', BookSessionView.as_view(), name='book-session'),
-    path('available/', AvailableSessionsListView.as_view(), name='available-sessions'),
-    path('cancel/<int:pk>/', CancelBookingView.as_view(), name='cancel-booking'),
-    path('update/<int:pk>/', UpdateSessionView.as_view(), name='update-session'),
+    path('', include(router.urls)),
 ]

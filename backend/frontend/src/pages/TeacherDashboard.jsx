@@ -28,7 +28,7 @@ function TeacherDashboard() {
       {/* Content Based on Active Tab */}
       <div>
         {activeTab === "dashboard" && <ProfileSection />}
-        {activeTab === "slots" && <CurrentSlots />}
+        {activeTab === "slots" && <CurrentSlots />} 
         {activeTab === "slotSettings" && <SlotSettings />}
         {activeTab === "reviews" && <ReviewsSection />}
         {activeTab === "account" && <AccountSettings />}

@@ -39,6 +39,6 @@ function StudentDashboard() {
       </div>
     </div>
   );
-}
+} 
 
 export default StudentDashboard;

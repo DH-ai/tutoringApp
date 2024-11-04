@@ -9,6 +9,7 @@ import AboutUs from './pages/About';
 import ContactUs from './pages/contact';
 import StudentDashboard from './pages/StudentDashboard';
 import TeacherDashboard from './pages/TeacherDashboard';
+import RegistrationPage from './pages/Registration';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
     // const [authToken, setAuthToken] = useState(null);
@@ -73,11 +74,13 @@ ReactDOM.createRoot(document.getElementById('root')).render(
             <Routes>
                 <Route path="/" element={<App />} />
                 <Route path="/login" element={<Login/>} />
+                <Route path="/registration" element={<RegistrationPage/>} />
                 <Route path="/profile" element={<Profile/>} />
                 <Route path="/services" element={<ServiceWorker/>} />
                 <Route path="/about" element={<AboutUs/>} />
                 <Route path="/contact" element={<ContactUs/>} />
-                <Route path = "/dashboard" element={<TeacherDashboard/>}/>
+                <Route path = "/dashboard/teacher" element={<TeacherDashboard/>}/>
+                <Route path = "/dashboard/student" element={<StudentDashboard/>}/>
             </Routes>
         </BrowserRouter>
     </React.StrictMode>

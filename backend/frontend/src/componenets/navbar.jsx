@@ -9,7 +9,7 @@ const Navbar = () => {
 
   return (
     <>
-      <nav>
+      <nav className=" bg-white">
         <div className="flex justify-evenly items-stretch ">
           <div className="flex-1 ml-10">
             <a href="/" className="text-4xl font-semibold capitalize">

@@ -1,17 +1,15 @@
-# Create your models here.
 from django.db import models
 from django.contrib.auth import get_user_model
 
 User = get_user_model()
 
-
 class Session(models.Model):
     teacher = models.ForeignKey(User, on_delete=models.CASCADE)
     title = models.CharField(max_length=255)
     description = models.TextField()
-    date = models.DateField(auto_created=True)
-    start_time = models.TimeField(auto_created=True)
-    end_time = models.TimeField(auto_created=True)
+    date = models.DateField(default='2024-11-04')
+    start_time = models.TimeField()
+    end_time = models.TimeField()
     max_students = models.PositiveIntegerField()
     booked_students = models.PositiveIntegerField(default=0)
 
@@ -20,8 +18,7 @@ class Session(models.Model):
         return self.bookings.count() < self.max_students
 
     def __str__(self):
-        return f"{self.topic} by {self.teacher.username} at {self.start_time}"
-
+        return f"{self.title} by {self.teacher.username} at {self.start_time}"
 
 class SessionBooking(models.Model):
     session = models.ForeignKey(
