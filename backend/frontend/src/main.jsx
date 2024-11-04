@@ -8,6 +8,7 @@ import ServiceWorker from './pages/services';
 import AboutUs from './pages/About';
 import ContactUs from './pages/contact';
 import StudentDashboard from './pages/StudentDashboard';
+import TeacherDashboard from './pages/TeacherDashboard';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
     // const [authToken, setAuthToken] = useState(null);
@@ -76,7 +77,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
                 <Route path="/services" element={<ServiceWorker/>} />
                 <Route path="/about" element={<AboutUs/>} />
                 <Route path="/contact" element={<ContactUs/>} />
-                <Route path = "/dashboard" element={<StudentDashboard/>}/>
+                <Route path = "/dashboard" element={<TeacherDashboard/>}/>
             </Routes>
         </BrowserRouter>
     </React.StrictMode>

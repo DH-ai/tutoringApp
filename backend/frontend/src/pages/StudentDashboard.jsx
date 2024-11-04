@@ -7,6 +7,7 @@ import Navbar from '../componenets/navbar';
 
 function StudentDashboard() {
   const [activeTab, setActiveTab] = useState('dashboard');
+  
 
   return (
     <div>
@@ -15,13 +16,13 @@ function StudentDashboard() {
 
       
       {/* Navigation Tabs */}
-      <div className='px-56   bg-blue-600'>
+      <div className='px-56   bg-blue-700'>
 
         <div className='flex justify-start items-center w-full'>
   
-        <button className = "text-stone-200 text-l font-sans font-semibold p-2"onClick={() => setActiveTab('dashboard')}>Dashboard</button>
-        <button className = "text-stone-200 text-l font-sans font-semibold p-2"onClick={() => setActiveTab('messages')}>My Messages</button>
-        <button className = "text-stone-200 text-l font-sans font-semibold p-2"onClick={() => setActiveTab('account')}>My Account</button>
+        <button className = "text-stone-100 text-l font-sans font-semibold p-2"onClick={() => setActiveTab('dashboard')}>Dashboard</button>
+        <button className = "text-stone-100 text-l font-sans font-semibold p-2"onClick={() => setActiveTab('messages')}>My Messages</button>
+        <button className = "text-stone-100 text-l font-sans font-semibold p-2"onClick={() => setActiveTab('account')}>My Account</button>
       </div>
       </div>
       
