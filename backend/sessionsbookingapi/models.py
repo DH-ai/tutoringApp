@@ -11,6 +11,7 @@ class Session(models.Model):
     end_time = models.DateTimeField()
     max_students = models.PositiveIntegerField()
     description = models.TextField(blank=True, null=True)
+    
 
 
     def is_available(self):
