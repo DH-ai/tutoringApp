@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'auth_users.apps.AuthUsersConfig',
+    'sessionsbookingapi.apps.SessionsbookingapiConfig',
     'server',
     'corsheaders',
     'rest_framework',
