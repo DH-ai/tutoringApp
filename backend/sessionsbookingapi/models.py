@@ -5,7 +5,7 @@ from django.contrib.auth import get_user_model
 User = get_user_model()
 
 class Session(models.Model):
-    teacher = models.ForeignKey(User, on_delete=models.CASCADE, related_name='sessions')
+    teacher_id = models.ForeignKey(User, on_delete=models.CASCADE, related_name='sessions')
     topic = models.CharField(max_length=255)
     start_time = models.DateTimeField()
     end_time = models.DateTimeField()
