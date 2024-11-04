@@ -3,7 +3,7 @@ from rest_framework.response import Response
 from rest_framework.permissions import AllowAny
 from rest_framework.decorators import api_view
 from rest_framework.views import APIView
-from django.contrib.auth.models import User
+from .models import User
 from rest_framework.permissions import IsAuthenticated
 from django.contrib.auth import authenticate
 from rest_framework_simplejwt.tokens import RefreshToken
@@ -20,7 +20,7 @@ from rest_framework.authtoken.views import ObtainAuthToken
 
 
 
-
+## working
 class UserRegisterView(generics.CreateAPIView):
     serializer_class = UserRegistrationSerializer
     permission_classes = [AllowAny]
@@ -29,17 +29,35 @@ class UserRegisterView(generics.CreateAPIView):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         user = serializer.save()
-        return Response({"message": "User registered successfully"}, status=status.HTTP_201_CREATED)
+        refresh = RefreshToken.for_user(user)
+        return Response({
+            "message": "User registered successfully",
+            "refresh": str(refresh),
+            "access": str(refresh.access_token),
+            "user_id": user.id
+        }, status=status.HTTP_201_CREATED)
 
    
    
-
+## working
 # Login user and get JWT token
-class UserLoginView(ObtainAuthToken):
-    def post(self, request, *args, **kwargs):
-        response = super(UserLoginView, self).post(request, *args, **kwargs)
-        token = Token.objects.get(key=response.data['token'])
-        return Response({'token': token.key, 'user_id': token.user_id})
+class UserLoginView(APIView):
+    permission_classes = [AllowAny]
+
+
+    def post(self, request,):
+        username = request.data.get('username')
+        password = request.data.get('password')
+        user = authenticate(request, username=username, password=password)
+        if user is not None:
+            refresh = RefreshToken.for_user(user)
+            return Response({
+                'refresh': str(refresh),
+                'access': str(refresh.access_token),
+                'user_id': user.id
+            })
+        else:
+            return Response({"detail": "Invalid credentials"}, status=status.HTTP_401_UNAUTHORIZED)
 
 
 class UserLogoutView(APIView):
@@ -80,11 +98,13 @@ class UserPublicProfileView(generics.RetrieveAPIView):
 
     def get_queryset(self):
         return User.objects.filter(is_teacher=True)  # Assuming `is_teacher` marks teacher profiles.
-    
+
+
+## working
 class TeacherListView(generics.ListAPIView):
     serializer_class = UserPublicProfileSerializer
     permission_classes = [AllowAny]
 
     def get_queryset(self):
         return User.objects.filter(is_teacher=True)
-\
+

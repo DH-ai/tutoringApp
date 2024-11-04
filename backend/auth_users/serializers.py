@@ -1,6 +1,6 @@
 # serializers.py
 from rest_framework import serializers
-from django.contrib.auth.models import User
+from .models import User
 from django.contrib.auth.password_validation import validate_password
 
 class UserRegistrationSerializer(serializers.ModelSerializer):
@@ -38,7 +38,7 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ('id', 'username', 'email', 'is_student', 'is_teacher')  # Expose fields as needed
+        fields = ('username', 'email', 'first_name', 'last_name', 'phone', 'address', 'city', 'state', 'zipcode', 'country', 'bio', 'subjectsInterested', 'is_student', 'is_teacher')  # Expose fields as needed
 
 class UserUpdateSerializer(serializers.ModelSerializer):
     class Meta:
