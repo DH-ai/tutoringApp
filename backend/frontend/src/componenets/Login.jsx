@@ -1,30 +1,24 @@
-import React, { useEffect, useState } from "react";
-import { register } from "../authService";
-// import { auth, firebase } from "./firebaseConfig";
-import { FaGoogle } from "react-icons/fa";
+import React, { useState } from "react";
+import  api  from "../utils/authService"; // Assuming this sends a POST request for registration
 
 function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  //   const [error, setError] = useState("");
-
-  //   const handleGoogleLogin = async () => {
-  //     const provider = new firebase.auth.GoogleAuthProvider();
-  //     try {
-  //       await auth.signInWithPopup(provider);
-  //       console.log("Logged in with Google");
-  //     } catch (error) {
-  //       console.error("Google login error:", error.message);
-  //     }
-  //   };
+  const [error, setError] = useState("");
 
   async function handleEmailLogin() {
     try {
-      register(username, password).then((response) => {
-        alert(response.data.message);
-      });
+      const response = await api.post('/api/login', { username, password });
+      alert(response.data); // Assuming response.data contains a message
       console.log("Logged in with email");
-    } catch (error) {}
+      localStorage.setItem("access_token", response.data.token);
+      localStorage.setItem("refresh_token", response.data.refreshToken);
+
+      // You might want to redirect to a different page or set a user session here
+    } catch (error) {
+      console.error("Email login error:", error.message);
+      setError(error.message);
+    }
   }
 
   return (
@@ -32,21 +26,22 @@ function Login() {
       <div className="w-full max-w-md p-8 space-y-6 bg-white shadow-lg rounded-lg">
         <h2 className="text-2xl font-bold text-center">Login</h2>
 
-        {/* {error && <div className="p-2 text-red-500">{error}</div>} */}
+        {error && <div className="p-2 text-red-500">{error}</div>}
 
         <form
           onSubmit={(e) => {
             e.preventDefault();
-            handleEmailLogin();
+            handleEmailLogin(); // Call the login function on submit
           }}
           className="space-y-4"
         >
           <input
-            type="email"
+            type="username"
             placeholder="username"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
             className="w-full p-2 border border-gray-300 rounded-md"
+            required
           />
           <input
             type="password"
@@ -56,31 +51,30 @@ function Login() {
             className="w-full p-2 border border-gray-300 rounded-md"
             required
           />
-          <button className="w-full p-2 mt-2 text-white bg-blue-600 rounded-md hover:bg-blue-700">
-            Login with Email
+          <button
+            type="submit"
+            className="w-full p-2 mt-2 text-white bg-blue-600 rounded-md hover:bg-blue-700"
+          >
+            Submit
           </button>
         </form>
-
-        <div className="relative my-4 text-center">
-          <span className="px-2 text-gray-500 bg-white">or</span>
-        </div>
-
-        <button
-          //   onClick={handleGoogleLogin}
-          className="flex items-center justify-center w-full p-2 text-white bg-red-500 rounded-md hover:bg-red-600"
-        >
-          <FaGoogle className="mr-2" /> Login with Google
-        </button>
       </div>
-      {/* <div className="h-screen flex justify-center items-center">
-        <div className="flex gap-2">
-          <div className="w-5 h-5 rounded-full animate-pulse bg-blue-600"></div>
-          <div className="w-5 h-5 rounded-full animate-pulse bg-blue-600"></div>
-          <div className="w-5 h-5 rounded-full animate-pulse bg-blue-600"></div>
-        </div>
-      </div> */}
     </div>
   );
 }
 
 export default Login;
+// const firebaseConfig = {
+//   apiKey: "YOUR_API_KEY",
+//   authDomain: "YOUR_AUTH_DOMAIN",
+//   projectId: "YOUR_PROJECT_ID",
+//   storageBucket: "YOUR_STORAGE_BUCKET",
+//   messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+//   appId: "YOUR_APP_ID",
+// };
+
+// if (!firebase.apps.length) {
+//   firebase.initializeApp(firebaseConfig);
+// }
+
+// const auth = firebase.auth();

@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import Navbar from "../componenets/navbar";
-import { CountryDropdown, StateDropdown } from "react-country-state-city";
+
+// import { CountryDropdown, StateDropdown } from "react-country-state-city";
+import api from "../utils/authService";
 
 const Registration = () => {
   const [formData, setFormData] = useState({
@@ -16,7 +18,11 @@ const Registration = () => {
     zipcode: "",
     country: "",
     bio: "",
-    role: "student", // Default to student
+    is_student: false,
+    is_teacher: false,
+    subjectsInterested: "",
+    role: "student",
+    // Default to student
   });
 
   const handleChange = (e) => {
@@ -25,11 +31,33 @@ const Registration = () => {
       ...prevData,
       [name]: value,
     }));
+    if (name === "role") {
+      setFormData((prevData) => ({
+        ...prevData,
+        is_student: value === "student",
+        is_teacher: value === "teacher",
+      }));
+    }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     // Add form submission logic here, such as an API call
+    try {
+      const response = await api.post(
+        "http://127.0.0.1:8000/api/auth/register",
+        formData,
+      );
+      const { access, refresh } = response.data;
+      localStorage.setItem("access_token", access);
+      localStorage.setItem("refresh_token", refresh);
+      alert("Registration successful.");
+      // Redirect to dashboard
+        window.location.href = "/";
+    } catch (error) {
+      console.error("Error registering user:", error.response.data);
+      alert("Registration failed.");
+    }
   };
 
   return (
@@ -158,6 +186,56 @@ const Registration = () => {
               />
             </div>
 
+            {/* Role Selection */}
+            <div>
+              <label className="block text-gray-700 font-medium">Role</label>
+              <div className="mt-1 ">
+                <label className="inline-flex items-center mx-2">
+                  <input
+                    type="radio"
+                    name="role"
+                    value="student"
+                    checked={formData.role === "student"}
+                    onChange={handleChange}
+                    className="form-radio"
+                  />
+                  <span className="ml-2">Student</span>
+                </label>
+                <label className="inline-flex items-center ml-6 mx-2">
+                  <input
+                    type="radio"
+                    name="role"
+                    value="teacher"
+                    checked={formData.role === "teacher"}
+                    onChange={ handleChange }
+                    className="form-radio"
+                  />
+                  <span className="ml-2">Teacher</span>
+                </label>
+              </div>
+            </div>
+
+            {/* Subjects Field (only if role is teacher) */}
+            {formData.role === "teacher" && (
+              <div>
+                <label
+                  htmlFor="subjectsInterested"
+                  className="block text-gray-700 font-medium"
+                >
+                  Subjects
+                </label>
+                <input
+                  type="text"
+                  id="subjectsInterested"
+                  name="subjectsInterested"
+                  value={formData.subjectsInterested}
+                  onChange={handleChange}
+                  placeholder="Enter subjects you can teach"
+                  className="mt-1 p-2 w-full border border-gray-300 rounded-md"
+                />
+              </div>
+            )}
+
             {/* Address Field */}
             <div>
               <label
@@ -239,7 +317,15 @@ const Registration = () => {
               >
                 Country
               </label>
-
+              <input
+                type="text"
+                id="country"
+                name="country"
+                value={formData.country}
+                onChange={handleChange}
+                placeholder="Enter your Country"
+                className="mt-1 p-2 w-full border border-gray-300 rounded-md"
+              />
             </div>
 
             {/* Bio Field */}

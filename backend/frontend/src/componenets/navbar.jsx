@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
 import { FaUserCircle } from "react-icons/fa";
 import { login } from "../login-handler";
@@ -6,6 +6,12 @@ import { Link } from "react-router-dom";
 
 const Navbar = () => {
   const [isLogged, setIsLogged] = useState(false);
+  useEffect(() => {
+    const token = localStorage.getItem("access_token");
+    if (token) {
+      setIsLogged(true);
+    }
+  }, []);
 
   return (
     <>
@@ -43,7 +49,7 @@ const Navbar = () => {
                     className="border border-3 border-blue-500 rounded-md transition-all text-xl bg-blue-100 text-blue-500 px-2 py-1 hover:bg-blue-500 hover:text-white"
                     onClick={() => login("", "", setIsLogged)}
                   >
-                    <Link to="/login">Login</Link>
+                    <Link to="/registration">Register</Link>
                   </button>
                 </div>
               )}

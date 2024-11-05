@@ -2,10 +2,13 @@ import React from "react";
 import "./output.css";
 import studentimg from "./assets/student.png";
 
-
 import Navbar from "./componenets/navbar";
+import { Link } from "react-router-dom";
+import Footer from "./componenets/footer";
 const HomePage = () => {
   return (
+    <>
+
     <div className="min-h-screen bg-gray-100 text-gray-800">
       {/* Navbar */}
       <Navbar />
@@ -95,11 +98,25 @@ const HomePage = () => {
           Join our community and take your learning experience to the next
           level!
         </p>
-        <button className="px-8 py-3 bg-white text-blue-500 font-semibold rounded-full shadow-md hover:bg-blue-100">
+        <button
+          className="px-8 py-3 bg-white text-blue-500 font-semibold rounded-full shadow-md hover:bg-blue-100"
+          onClick={() => {
+            const accessToken = localStorage.getItem('access_token');
+            if (accessToken) {
+              window.location.href = '/';
+            } else {
+              window.location.href = '/login';
+            }
+          }}
+        >
           Join Now
         </button>
       </section>
+
     </div>
+    <Footer />
+    </>
+
   );
 };
 
