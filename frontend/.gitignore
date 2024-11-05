@@ -14,7 +14,7 @@ pnpm-debug.log*
 .env.*.local
 
 # Build Output
-dist/
+# dist/
 build/
 .out/
 .cache/
