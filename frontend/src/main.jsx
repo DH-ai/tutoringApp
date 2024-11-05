@@ -76,7 +76,7 @@ const Main = () => {
   //       </Routes>
 
   return (
-    <React.StrictMode>
+    
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<App />} />
@@ -99,7 +99,7 @@ const Main = () => {
           </Route>
         </Routes>
       </BrowserRouter>
-    </React.StrictMode>
+  
   );
 };
 
