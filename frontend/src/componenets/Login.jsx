@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import  api  from "../utils/authService"; // Assuming this sends a POST request for registration
+import api from "../utils/authService"; // Assuming this sends a POST request for registration
 
 function Login() {
   const [username, setUsername] = useState("");
@@ -8,7 +8,10 @@ function Login() {
 
   async function handleEmailLogin() {
     try {
-      const response = await api.post('/api/login', { username, password });
+      const response = await api.post("/api/auth/login", {
+        username,
+        password,
+      });
       alert(response.data); // Assuming response.data contains a message
       console.log("Logged in with email");
       localStorage.setItem("access_token", response.data.token);
