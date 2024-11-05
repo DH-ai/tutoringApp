@@ -5,13 +5,18 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
     "preview": "vite preview",
     "lint": "eslint",
+    "build": "vite build",
     "format": "prettier --write \"src/**/*.{js,jsx}\"",
-    "build:css": "npx tailwindcss -i ./src/input.css -o ./src/output.css  ",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build:css": "npx tailwindcss -i ./src/input.css -o ./src/output.css",
+    "deploy": "gh-pages -d dist",
+    "predeploy": "npm run build",
+    "start": "vite",
+    "test": "echo \"No test specified\" && exit 1",
+    "eject": "echo \"No eject script available\" && exit 1"
   },
+  "homepage": "https://dh-ai.github.io/tutoringApp",
   "keywords": [],
   "author": "",
   "license": "ISC",
