@@ -10,8 +10,8 @@
     "build": "vite build",
     "format": "prettier --write \"src/**/*.{js,jsx}\"",
     "build:css": "npx tailwindcss -i ./src/input.css -o ./src/output.css",
-    "deploy": "gh-pages -d dist",
     "predeploy": "npm run build",
+    "deploy": "gh-pages -d dist",
     "start": "vite",
     "test": "echo \"No test specified\" && exit 1",
     "eject": "echo \"No eject script available\" && exit 1"
