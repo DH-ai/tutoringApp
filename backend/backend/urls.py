@@ -22,5 +22,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/users/', include('auth_users.urls')),
     path('api/sessions/', include('sessionsbookingapi.urls')),
+    path('api/webchat/', include('webchatservice.urls')),
 
 ]
