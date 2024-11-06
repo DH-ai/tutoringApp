@@ -85,18 +85,14 @@ const Main = () => {
           <Route path="/contact" element={<ContactUs />} />
           <Route path="/profile" element={<Profile />} />
           
-          <Route element={<LoginRoute authToken={authToken} />}>
+          {/* <Route element={<LoginRoute authToken={authToken} />}>
             <Route path="/registration" element={<RegistrationPage />} />
             <Route path="/registerSuccess" element={<RegisterSuccess />} />
             <Route path="/login" element={<Login />} />
           </Route>
 
           {/* Routes for Authenticated Users */}
-          <Route element={<ProtectedRoutes authToken={authToken} />}>
-            <Route path="/dashboard/teacher" element={<TeacherDashboard />} />
-            <Route path="/dashboard/student" element={<StudentDashboard />} />
-            {/* <Route path="/logout" element={<Logout />} /> */}
-          </Route>
+          
         </Routes>
       </BrowserRouter>
   
