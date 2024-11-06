@@ -10,9 +10,9 @@ class UserRole(models.TextChoices):
 
 
 class User (AbstractUser):
+    id = models.UUIDField(default=uuid.uuid4, editable=False, unique=True,primary_key=True) # unique id required 0
     username = models.CharField(max_length=50, unique=True) # unique username required 1
     password = models.CharField(max_length=50) # password required 2
-    user_id = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)  # obfuscated user_id 3
     email = models.EmailField(max_length=50) # email required might look into email verification 4
     phone = models.CharField(max_length=10, blank=True) # phone number optional 5
     first_name = models.CharField(max_length=50) # first name required 6 

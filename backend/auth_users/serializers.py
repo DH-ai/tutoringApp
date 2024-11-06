@@ -31,7 +31,7 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
                 - profile_picture (str): The profile picture of the user.
         """
         model = User
-        fields = ('username', 'email', 'password', 'first_name', 'last_name', 'phone', 'address', 'city',
+        fields = ( 'username', 'email', 'password', 'first_name', 'last_name', 'phone', 'address', 'city',
                   'state', 'zipcode', 'country', 'bio', 'subjectsInterested', 'role', 'profile_picture')
 
     def validate_password(self, value):
@@ -44,17 +44,18 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
             username=validated_data['username'],  # 1
             email=validated_data['email'],  # 2
             first_name=validated_data['first_name'],  # 3
-            last_name=validated_data['last_name', ''],  # 4
-            phone=validated_data['phone', ''],  # 5
-            address=validated_data['address', ''],  # 6
-            city=validated_data['city', ''],  # 7
-            state=validated_data['state', ''],  # 8
-            zipcode=validated_data['zipcode', ''],  # 9
-            country=validated_data['country', ''],  # 10
-            bio=validated_data['bio', ''],  # 11
-            subjectsInterested=validated_data['subjectsInterested', ''],  # 12
+            last_name=validated_data.get('last_name', ''),  # 4
+            phone=validated_data.get('phone', ''),  # 5
+            address=validated_data.get('address', ''),  # 6
+            city=validated_data.get('city', ''),  # 7
+            state=validated_data.get('state', ''),  # 8
+            zipcode=validated_data.get('zipcode', ''),  # 9
+            country=validated_data.get('country', ''),  # 10
+            bio=validated_data.get('bio', ''),  # 11
+            subjectsInterested=validated_data.get(
+                'subjectsInterested', ''),  # 12
             role=validated_data['role'],  # 13
-            profile_picture=validated_data['profile_picture', '']  # 14
+            profile_picture=validated_data.get('profile_picture', '')  # 14
         )
         user.set_password(validated_data['password'])  # Hash the password
         user.save()
@@ -64,7 +65,7 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ('username', 'email', 'first_name', 'last_name', 'phone', 'address', 'city', 'state', 'zipcode',
+        fields = ('id','username', 'email', 'first_name', 'last_name', 'phone', 'address', 'city', 'state', 'zipcode',
                   # Expose fields as needed
                   'country', 'bio', 'subjectsInterested', 'role', 'profile_picture')
 
@@ -74,7 +75,7 @@ class UserUpdateSerializer(serializers.ModelSerializer):
         model = User
         fields = ('username', 'email', 'first_name', 'last_name', 'phone', 'address', 'city', 'state', 'zipcode',
                   # Allow updates to these fields
-                  'country', 'bio', 'subjectsInterested', 'is_student', 'is_teacher')
+                  'country', 'bio', 'subjectsInterested', 'role', 'profile_picture')
 
     def update(self, instance, validated_data):
 
@@ -102,7 +103,7 @@ class UserPublicProfileSerializer(serializers.ModelSerializer):
         model = User
         fields = ('id', 'username', 'email', 'first_name', 'last_name', 'phone', 'address', 'city', 'bio',
                   # Adjust fields to show in public profile
-                  'subjectsInterested', 'is_student', 'is_teacher')
+                  'subjectsInterested', 'role', 'profile_picture')
 
 
 class UserLoginSerializer(serializers.Serializer):
