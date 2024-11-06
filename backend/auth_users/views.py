@@ -39,9 +39,6 @@ class UserProfileView(generics.RetrieveAPIView):
             return Response(serializer.data) 
         return Response({'error': 'User not found'}, status=status.HTTP_404_NOT_FOUND)
 
-
-
-
 class UserRegisterView(generics.CreateAPIView):
     """
     POST /api/users/register
@@ -59,9 +56,6 @@ class UserRegisterView(generics.CreateAPIView):
                 'refresh_token': str(refresh)
             })
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-   
-   
 
 class UserLoginView(APIView):
     """
@@ -84,7 +78,6 @@ class UserLoginView(APIView):
                 })
             return Response({'error': 'Invalid credentials'}, status=status.HTTP_401_UNAUTHORIZED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
 
 class UserLogoutView(APIView):
     """
@@ -111,7 +104,6 @@ class UserProfileUpdateView(APIView):
             return Response(serializer.data, status=status.HTTP_200_OK)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-
 class UserDeleteView(generics.DestroyAPIView):
     """
     DELETE /api/users/profile
@@ -123,7 +115,6 @@ class UserDeleteView(generics.DestroyAPIView):
         user.delete()
         return Response({"message": "User deleted successfully"}, status=status.HTTP_204_NO_CONTENT)
 
-
 class TeacherListView(generics.ListAPIView):
     """
     GET /api/users/teachers
@@ -133,11 +124,11 @@ class TeacherListView(generics.ListAPIView):
 
     def get_queryset(self):
         return User.objects.filter(role="teacher" | "TEACHER")
-
+"""
 class RefreshTokenView(APIView):
-    """
+    
     POST /api/users/refresh
-    """
+    
     permission_classes = [AllowAny]
 
     def post(self, request, *args, **kwargs):
@@ -152,4 +143,6 @@ class RefreshTokenView(APIView):
                     'refresh_token': str(refresh)
                 })
             return Response({'error': 'Invalid credentials'}, status=status.HTTP_401_UNAUTHORIZED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)4
+
+"""
