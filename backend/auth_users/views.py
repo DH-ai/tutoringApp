@@ -7,88 +7,115 @@ from .models import User
 from rest_framework.permissions import IsAuthenticated
 from django.contrib.auth import authenticate
 from rest_framework_simplejwt.tokens import RefreshToken
-from .serializers import UserRegistrationSerializer
+from .serializers import UserLoginSerializer, UserRegistrationSerializer
 from .serializers import UserSerializer
 from .serializers import UserUpdateSerializer
 from .serializers import UserPublicProfileSerializer
 from rest_framework.authtoken.models import Token
 from rest_framework.authtoken.views import ObtainAuthToken
+from django.contrib.auth import authenticate, login, logout
 
 
 
-# Register new user
+
+class UserProfileView(generics.RetrieveAPIView):
+    """
+    GET /api/users/profile
+
+    GET /api/users/profile/{id}
+
+    """
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request, *args, **kwargs):
+        # Get user details based on authenticated user or specific id
+        user_id = kwargs.get('user_id', None)
+        if user_id:
+            user = User.objects.filter(id=user_id).first()
+        else:
+            user = request.user
+        if user:
+            serializer = UserSerializer(user)
+            return Response(serializer.data) 
+        return Response({'error': 'User not found'}, status=status.HTTP_404_NOT_FOUND)
 
 
 
-## working
+
 class UserRegisterView(generics.CreateAPIView):
+    """
+    POST /api/users/register
+    """
     serializer_class = UserRegistrationSerializer
     permission_classes = [AllowAny]
 
     def post(self, request, *args, **kwargs):
-        serializer = self.get_serializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        user = serializer.save()
-        refresh = RefreshToken.for_user(user)
-        Token.objects.create(user=user)
-        return Response({
-            "message": "User registered successfully",
-            "refresh": str(refresh),
-            "access": str(refresh.access_token),
-            "user_id": user.id
-        }, status=status.HTTP_201_CREATED)
+        serializer = UserRegisterView.serializer_class(data=request.data)
+        if serializer.is_valid():
+            user = serializer.save()
+            refresh = RefreshToken.for_user(user)
+            return Response({
+                'access_token': str(refresh.access_token),
+                'refresh_token': str(refresh)
+            })
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
    
    
 
 class UserLoginView(APIView):
+    """
+    POST /api/users/login
+    """
     permission_classes = [AllowAny]
 
 
-    def post(self, request,):
-        username = request.data.get('username')
-        password = request.data.get('password')
-        user = authenticate(request, username=username, password=password)
-
-        if user is not None:
-
-            token, created = Token.objects.get_or_create(user=user)
-
-            refresh = RefreshToken.for_user(user)
-            return Response({
-                'refresh': str(refresh),
-                'access': str(refresh.access_token),
-                'user_id': user.id,
-                'token': token.key
-            })
-        else:
-            return Response({"detail": "Invalid credentials"}, status=status.HTTP_401_UNAUTHORIZED)
+    def post(self, request, *args, **kwargs):
+        serializer = UserLoginSerializer(data=request.data)
+        if serializer.is_valid():
+            user = authenticate(username=serializer.validated_data['username'], 
+                                 password=serializer.validated_data['password'])
+            if user:
+                login(request, user)
+                refresh = RefreshToken.for_user(user)
+                return Response({
+                    'access_token': str(refresh.access_token),
+                    'refresh_token': str(refresh)
+                })
+            return Response({'error': 'Invalid credentials'}, status=status.HTTP_401_UNAUTHORIZED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 class UserLogoutView(APIView):
-    def post(self, request):
-        request.user.auth_token.delete()
-        return Response({"message": "Logged out successfully"}, status=status.HTTP_200_OK)
-    
-class UserProfileView(generics.RetrieveAPIView):
-    serializer_class = UserSerializer
+    """
+    POST /api/users/logout
+    """
     permission_classes = [IsAuthenticated]
 
-    def get_object(self):
-        return self.request.user
+    def post(self, request, *args, **kwargs):
+        # Log out by removing the JWT token or handling session-based logout
+        logout(request)
+        return Response({'message': 'Logged out successfully'}, status=status.HTTP_200_OK)
 
-
-    
-class UserProfileUpdateView(generics.UpdateAPIView):
-    serializer_class = UserUpdateSerializer
+class UserProfileUpdateView(APIView):
+    """
+    PUT /api/users/profile
+    """
     permission_classes = [IsAuthenticated]
 
-    def get_object(self):
-        return self.request.user
-    
+    def put(self, request, *args, **kwargs):
+        user = request.user
+        serializer = UserSerializer(user, data=request.data, partial=True)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 class UserDeleteView(generics.DestroyAPIView):
+    """
+    DELETE /api/users/profile
+    """
     permission_classes = [IsAuthenticated]
 
     def delete(self, request, *args, **kwargs):
@@ -96,18 +123,33 @@ class UserDeleteView(generics.DestroyAPIView):
         user.delete()
         return Response({"message": "User deleted successfully"}, status=status.HTTP_204_NO_CONTENT)
 
-class UserPublicProfileView(generics.RetrieveAPIView):
-    serializer_class = UserPublicProfileSerializer
-    permission_classes = [AllowAny]
-    lookup_url_kwarg = "user_id"
-
-    def get_queryset(self):
-        return User.objects.filter(is_teacher=True)  # Assuming `is_teacher` marks teacher profiles.
 
 class TeacherListView(generics.ListAPIView):
+    """
+    GET /api/users/teachers
+    """
     serializer_class = UserPublicProfileSerializer
     permission_classes = [AllowAny]
 
     def get_queryset(self):
-        return User.objects.filter(is_teacher=True)
+        return User.objects.filter(role="teacher" | "TEACHER")
 
+class RefreshTokenView(APIView):
+    """
+    POST /api/users/refresh
+    """
+    permission_classes = [AllowAny]
+
+    def post(self, request, *args, **kwargs):
+        serializer = UserLoginSerializer(data=request.data)
+        if serializer.is_valid():
+            user = authenticate(username=serializer.validated_data['username'], 
+                                 password=serializer.validated_data['password'])
+            if user:
+                refresh = RefreshToken.for_user(user)
+                return Response({
+                    'access_token': str(refresh.access_token),
+                    'refresh_token': str(refresh)
+                })
+            return Response({'error': 'Invalid credentials'}, status=status.HTTP_401_UNAUTHORIZED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
