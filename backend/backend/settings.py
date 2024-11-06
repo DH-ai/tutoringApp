@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'auth_users.apps.AuthUsersConfig',
     'sessionsbookingapi.apps.SessionsbookingapiConfig',
     'rest_framework_simplejwt.token_blacklist',
+    'webchatservice.apps.WebchatserviceConfig',
     'server',
     'corsheaders',
     'rest_framework',
@@ -168,7 +169,7 @@ AUTH_USER_MODEL = 'auth_users.User'
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
 ]
-
+ASGI_APPLICATION = 'tutorite.asgi.application'
 SIMPLE_JWT = {
     # Access token valid for 1 hour
     'ACCESS_TOKEN_LIFETIME': timedelta(hours=1),
@@ -185,7 +186,7 @@ SIMPLE_JWT = {
     'AUTH_TOKEN_CLASSES': ('rest_framework_simplejwt.tokens.AccessToken',),
     'TOKEN_TYPE_CLAIM': 'token_type',
 }
-
+# For Django Channels and WebSockets to work, we need to add the following settings to the settings.py file:
 CHANNEL_LAYERS = {
     'default': {
         'BACKEND': 'channels_redis.core.RedisChannelLayer',
@@ -194,3 +195,5 @@ CHANNEL_LAYERS = {
         },
     },
 }
+
+
