@@ -8,6 +8,12 @@
 | /api/teachers/{teacher_id}/sessions?private=true | GET | Teacher | Teachers retrieve all sessions they host, including drafts. |
 | /api/sessions/upcoming?role=student | GET | Student | Get a list of upcoming sessions for the student. |
 | /api/sessions/{session_id}/edit | PUT | Teacher | Teachers can edit sessions they own. |
+
+
+## Users
+| Endpoint | Method | Role | Description |
+| Endpoint | Method | Role | Description |
+| --- | --- | --- | --- |
 | /api/users/profile | GET | Authenticated User | Return the authenticated user's profile. |
 | /api/users/profile/{id} | GET | Any | Return the specific user's profile by ID. |
 | /api/users/teachers | GET | Any | Retrieve a list of teachers for site viewing purposes. |
