@@ -1,7 +1,7 @@
 from django.urls import path
-from . import views
+from .views import StartSessionView
 
 urlpatterns = [
-    path('send_message/', views.send_message, name='send_message'),
-    path('get_messages/<str:room_name>/', views.get_messages, name='get_messages'),
+    path('sessions/start', StartSessionView.as_view(), name='start_session'),
+    
 ]
