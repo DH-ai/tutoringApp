@@ -7,8 +7,30 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True, required=True)
 
     class Meta:
+        """
+        Meta class for the User serializer.
+
+        Attributes:
+            model (django.db.models.Model): The model that this serializer is based on.
+            fields (tuple): The fields to be included in the serialized output. This includes:
+                - username (str): The username of the user.
+                - email (str): The email address of the user.
+                - password (str): The password of the user.
+                - first_name (str): The first name of the user.
+                - last_name (str): The last name of the user.
+                - phone (str): The phone number of the user.
+                - address (str): The address of the user.
+                - city (str): The city of the user.
+                - state (str): The state of the user.
+                - zipcode (str): The zipcode of the user.
+                - country (str): The country of the user.
+                - bio (str): The biography of the user.
+                - subjectsInterested (str): The subjects the user is interested in.
+                - Role (str): The role of the user (student or teacher).
+                - profile_picture (str): The profile picture of the user.
+        """
         model = User
-        fields = ('username', 'email', 'password', 'first_name', 'last_name', 'phone', 'address', 'city', 'state', 'zipcode', 'country', 'bio', 'subjectsInterested', 'is_student', 'is_teacher')
+        fields = ('username', 'email', 'password', 'first_name', 'last_name', 'phone', 'address', 'city', 'state', 'zipcode', 'country', 'bio', 'subjectsInterested', 'role', 'profile_picture')
 
     def validate_password(self, value):
         validate_password(value)  # Validate the password using Django's validators
@@ -16,20 +38,20 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         user = User(
-            username=validated_data['username'],
-            email=validated_data['email'],
-            first_name=validated_data['first_name'],
-            last_name=validated_data['last_name'],
-            phone=validated_data['phone'],
-            address=validated_data['address'],
-            city=validated_data['city'],
-            state=validated_data['state'],
-            zipcode=validated_data['zipcode'],
-            country=validated_data['country'],
-            bio=validated_data['bio'],
-            subjectsInterested=validated_data['subjectsInterested'],
-            is_student=validated_data['is_student'],
-            is_teacher=validated_data['is_teacher']
+            username=validated_data['username'], #1
+            email=validated_data['email'], #2
+            first_name=validated_data['first_name'], #3
+            last_name=validated_data['last_name',''],#4
+            phone=validated_data['phone',''], #5
+            address=validated_data['address',''], #6
+            city=validated_data['city',''],     #7
+            state=validated_data['state',''],  #8
+            zipcode=validated_data['zipcode',''],   #9
+            country=validated_data['country',''], #10
+            bio=validated_data['bio',''], #11
+            subjectsInterested=validated_data['subjectsInterested',''], #12
+            role=validated_data['role'],#13
+            profile_picture=validated_data['profile_picture','']#14
         )
         user.set_password(validated_data['password'])  # Hash the password
         user.save()
