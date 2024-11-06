@@ -1,4 +1,7 @@
-| Endpoint | Method | Role | Description |
+# APIs
+
+## Sessions
+
 | Endpoint | Method | Role | Description |
 | --- | --- | --- | --- |
 | /api/users/{user_id} | GET | Any | Retrieve user data. Show full details if it’s the user’s own data. |
@@ -9,9 +12,8 @@
 | /api/sessions/upcoming?role=student | GET | Student | Get a list of upcoming sessions for the student. |
 | /api/sessions/{session_id}/edit | PUT | Teacher | Teachers can edit sessions they own. |
 
-
 ## Users
-| Endpoint | Method | Role | Description |
+
 | Endpoint | Method | Role | Description |
 | --- | --- | --- | --- |
 | /api/users/profile | GET | Authenticated User | Return the authenticated user's profile. |
