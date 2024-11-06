@@ -116,6 +116,7 @@ class UserDeleteView(generics.DestroyAPIView):
         return Response({"message": "User deleted successfully"}, status=status.HTTP_204_NO_CONTENT)
 
 class TeacherListView(generics.ListAPIView):
+
     """
     GET /api/users/teachers
     """
@@ -124,6 +125,8 @@ class TeacherListView(generics.ListAPIView):
 
     def get_queryset(self):
         return User.objects.filter(role="teacher" | "TEACHER")
+    
+    
 """
 class RefreshTokenView(APIView):
     
