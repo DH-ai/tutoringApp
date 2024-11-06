@@ -40,8 +40,7 @@ class UserRegisterView(generics.CreateAPIView):
 
    
    
-## working
-# Login user and get JWT token
+
 class UserLoginView(APIView):
     permission_classes = [AllowAny]
 
@@ -105,8 +104,6 @@ class UserPublicProfileView(generics.RetrieveAPIView):
     def get_queryset(self):
         return User.objects.filter(is_teacher=True)  # Assuming `is_teacher` marks teacher profiles.
 
-
-## working
 class TeacherListView(generics.ListAPIView):
     serializer_class = UserPublicProfileSerializer
     permission_classes = [AllowAny]

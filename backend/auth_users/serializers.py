@@ -3,6 +3,7 @@ from rest_framework import serializers
 from .models import User
 from django.contrib.auth.password_validation import validate_password
 
+
 class UserRegistrationSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True, required=True)
 
@@ -30,49 +31,59 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
                 - profile_picture (str): The profile picture of the user.
         """
         model = User
-        fields = ('username', 'email', 'password', 'first_name', 'last_name', 'phone', 'address', 'city', 'state', 'zipcode', 'country', 'bio', 'subjectsInterested', 'role', 'profile_picture')
+        fields = ('username', 'email', 'password', 'first_name', 'last_name', 'phone', 'address', 'city',
+                  'state', 'zipcode', 'country', 'bio', 'subjectsInterested', 'role', 'profile_picture')
 
     def validate_password(self, value):
-        validate_password(value)  # Validate the password using Django's validators
+        # Validate the password using Django's validators
+        validate_password(value)
         return value
 
     def create(self, validated_data):
         user = User(
-            username=validated_data['username'], #1
-            email=validated_data['email'], #2
-            first_name=validated_data['first_name'], #3
-            last_name=validated_data['last_name',''],#4
-            phone=validated_data['phone',''], #5
-            address=validated_data['address',''], #6
-            city=validated_data['city',''],     #7
-            state=validated_data['state',''],  #8
-            zipcode=validated_data['zipcode',''],   #9
-            country=validated_data['country',''], #10
-            bio=validated_data['bio',''], #11
-            subjectsInterested=validated_data['subjectsInterested',''], #12
-            role=validated_data['role'],#13
-            profile_picture=validated_data['profile_picture','']#14
+            username=validated_data['username'],  # 1
+            email=validated_data['email'],  # 2
+            first_name=validated_data['first_name'],  # 3
+            last_name=validated_data['last_name', ''],  # 4
+            phone=validated_data['phone', ''],  # 5
+            address=validated_data['address', ''],  # 6
+            city=validated_data['city', ''],  # 7
+            state=validated_data['state', ''],  # 8
+            zipcode=validated_data['zipcode', ''],  # 9
+            country=validated_data['country', ''],  # 10
+            bio=validated_data['bio', ''],  # 11
+            subjectsInterested=validated_data['subjectsInterested', ''],  # 12
+            role=validated_data['role'],  # 13
+            profile_picture=validated_data['profile_picture', '']  # 14
         )
         user.set_password(validated_data['password'])  # Hash the password
         user.save()
         return user
 
+
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ('username', 'email', 'first_name', 'last_name', 'phone', 'address', 'city', 'state', 'zipcode', 'country', 'bio', 'subjectsInterested', 'is_student', 'is_teacher')  # Expose fields as needed
+        fields = ('username', 'email', 'first_name', 'last_name', 'phone', 'address', 'city', 'state', 'zipcode',
+                  # Expose fields as needed
+                  'country', 'bio', 'subjectsInterested', 'role', 'profile_picture')
+
 
 class UserUpdateSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ('username', 'email','first_name', 'last_name', 'phone', 'address', 'city', 'state', 'zipcode', 'country', 'bio', 'subjectsInterested', 'is_student', 'is_teacher')  # Allow updates to these fields
+        fields = ('username', 'email', 'first_name', 'last_name', 'phone', 'address', 'city', 'state', 'zipcode',
+                  # Allow updates to these fields
+                  'country', 'bio', 'subjectsInterested', 'is_student', 'is_teacher')
 
     def update(self, instance, validated_data):
 
         instance.username = validated_data.get('username', instance.username)
         instance.email = validated_data.get('email', instance.email)
-        instance.first_name = validated_data.get('first_name', instance.first_name)
-        instance.last_name = validated_data.get('last_name', instance.last_name)
+        instance.first_name = validated_data.get(
+            'first_name', instance.first_name)
+        instance.last_name = validated_data.get(
+            'last_name', instance.last_name)
         instance.phone = validated_data.get('phone', instance.phone)
         instance.address = validated_data.get('address', instance.address)
         instance.city = validated_data.get('city', instance.city)
@@ -80,11 +91,20 @@ class UserUpdateSerializer(serializers.ModelSerializer):
         instance.zipcode = validated_data.get('zipcode', instance.zipcode)
         instance.country = validated_data.get('country', instance.country)
         instance.bio = validated_data.get('bio', instance.bio)
-        instance.subjectsInterested = validated_data.get('subjectsInterested', instance.subjectsInterested)
+        instance.subjectsInterested = validated_data.get(
+            'subjectsInterested', instance.subjectsInterested)
         instance.save()
         return instance
+
 
 class UserPublicProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ('id', 'username', 'email', 'first_name', 'last_name', 'phone', 'address', 'city', 'bio', 'subjectsInterested', 'is_student', 'is_teacher')  # Adjust fields to show in public profile
+        fields = ('id', 'username', 'email', 'first_name', 'last_name', 'phone', 'address', 'city', 'bio',
+                  # Adjust fields to show in public profile
+                  'subjectsInterested', 'is_student', 'is_teacher')
+
+
+class UserLoginSerializer(serializers.Serializer):
+    username = serializers.CharField()
+    password = serializers.CharField()
