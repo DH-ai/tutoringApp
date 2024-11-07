@@ -21,7 +21,7 @@ function Login() {
       localStorage.setItem("access_token", response.data.access_token);
       localStorage.setItem("refresh_token", response.data.refresh_token);
       alert("Logged in successfully");
-      // window.location.href = "/";
+      window.location.href = "/loginSuccess";
       console.log(response.data);
 
       // You might want to redirect to a different page or set a user session here

@@ -41,19 +41,18 @@ const Navbar = () => {
           <div className="flex-1  ">
             <div className="flex items-center justify-end h-full">
               {isLogged ? (
-                
-                  <FaUserCircle onClick={
-                    () => {
-                      window.location.href= localStorage.getItem("role") === "student" ? "/studentDashboard" : "/teacherDashboard";
-                    }
-                  } className="text-3xl text-blue-600 hover:cursor-pointer mx-6 " />
-
+                <FaUserCircle
+                  onClick={() => {
+                    window.location.href =
+                      localStorage.getItem("role") === "student"
+                        ? "/studentDashboard"
+                        : "/teacherDashboard";
+                  }}
+                  className="text-3xl text-blue-600 hover:cursor-pointer mx-6 "
+                />
               ) : (
                 <div className="space-x-2 mr-6 my-2">
-                  <button
-                    className="border border-3 border-blue-500 rounded-md transition-all text-xl bg-blue-100 text-blue-500 px-2 py-1 hover:bg-blue-500 hover:text-white"
-                    onClick={() => login("", "", setIsLogged)}
-                  >
+                  <button className="border border-3 border-blue-500 rounded-md transition-all text-xl bg-blue-100 text-blue-500 px-2 py-1 hover:bg-blue-500 hover:text-white">
                     <Link to="/registration">Register</Link>
                   </button>
                 </div>

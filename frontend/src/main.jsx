@@ -14,24 +14,35 @@ import RegisterSuccess from "./pages/registerSucces";
 // import Logout from "./componenets/Logout";
 import ProtectedRoutes from "./ProctedRoutes";
 import LoginRoute from "./LoginRoutes";
+import LoginSuccess from "./componenets/loginSuccess";
+// import { AuthProvider, useAuth } from "./utils/authcontext";
+import api from "./utils/authService";
 // import api from './utils/api';
 
-const authToken = localStorage.getItem("access_token"); // Example of getting auth token
+// Example of getting auth token
 
 const Main = () => {
-  //   const [authToken, setAuthToken] = useState(null);
+  const [authToken, setAuthToken] = useState(null);
 
-  //   useEffect(() => {
-  //     api
-  //       .get("http://localhost:8000" + "/api/auth/")
-  //       .then((res) => {
-  //         console.log(res.data.status);
-  //         setAuthToken(res.data.status === "YES");
-  //       })
-  //       .catch((err) => {
-  //         console.log(err);
-  //       });
-  //   }, []);
+  useEffect(() => {
+    setAuthToken({
+      access_token: localStorage.getItem("access_token"),
+      refresh_token: localStorage.getItem("refresh_token"),
+    });
+    console.log(authToken);
+  }, []);
+
+  // useEffect(() => {
+  //   api
+  //     .get("http://127.0.0.1:8000" + "/api/users/isLoggedin/")
+  //     .then((res) => {
+  //       console.log(res.data.status);
+  //       setAuthToken(res.data.status === "YES");
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //     });
+  // }, []);
 
   //   console.log(authToken);
 
@@ -74,26 +85,27 @@ const Main = () => {
   //           <Route path="/logout" element={<Logout />} />
   //         </Route>
   //       </Routes>
-
+  // const {authToken} = useAuth();
   return (
+    // <AuthProvider>
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<App />} />
         <Route path="/services" element={<ServiceWorker />} />
         <Route path="/about" element={<AboutUs />} />
         <Route path="/contact" element={<ContactUs />} />
-        <Route path="/profile" element={<Profile />} /> {/* i have a querry string in api side to get profiles how to give query to the profile and then use it fetch the profile deatils reactec query and context maybe */}
-
+        <Route path="/profile" element={<Profile />} />{" "}
+        {/* i have a querry string in api side to get profiles how to give query to the profile and then use it fetch the profile deatils reactec query and context maybe */}
         <Route element={<LoginRoute authToken={authToken} />}>
-            <Route path="/registration" element={<RegistrationPage />} />
-            <Route path="/registerSuccess" element={<RegisterSuccess />} />
-            <Route path="/login" element={<Login />} />
+          <Route path="/registration" element={<RegistrationPage />} />
+          <Route path="/registerSuccess" element={<RegisterSuccess />} />
+          <Route path="/login" element={<Login />} />
         </Route>
         <Route element={<ProtectedRoutes authToken={authToken} />}>
-          <Route path="/studentDashboard" element={<StudentDashboard /> } />
-          <Route path="/teacherDashboard" element={<TeacherDashboard />} />
+          <Route path="/loginSuccess" element={<LoginSuccess />} />
+          <Route path="/student-dashboard" element={<StudentDashboard />} />
+          <Route path="/teacher-dashboard" element={<TeacherDashboard />} />
         </Route>
-
       </Routes>
     </BrowserRouter>
   );

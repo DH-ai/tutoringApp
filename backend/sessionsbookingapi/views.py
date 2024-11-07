@@ -6,16 +6,27 @@ from auth_users.models import User
 from django.db import models
 from auth_users.serializers import UserSerializer
 from .models import SessionsModel, SessionBooking
-from .serializers import SessionSerializer, SessionBookingSerializer
+from .serializers import SessionSerializer, SessionBookingSerializer, CreateSessionSerializer
+from rest_framework.permissions import AllowAny
 
 
-class CreateSessionView(viewsets.ViewSet):
-    def create(self,request):
-        serializer = SessionSerializer(data=request.data)
-        if serializer.is_valid():
+class SessionCreateViewSet(viewsets.ModelViewSet):
+    serializer_class = CreateSessionSerializer
+    permission_classes = [AllowAny]
+
+    def get_queryset(self):
+        queryset = SessionsModel.objects.all()
+
+        # return SessionsModel.id
+
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        if (serializer.is_valid(raise_exception=True)):
             serializer.save()
-            return Response(serializer.data)
-        return Response(serializer.errors, status=400)
+
+        return Response({
+            "session_id": serializer.data.get('id')
+        })
 
 
 class SessionViewSet(viewsets.ModelViewSet):
@@ -37,50 +48,47 @@ class SessionViewSet(viewsets.ModelViewSet):
 
         # Fetch the user instance associated with the UUID
         try:
-            user = User.objects.get(id=user_uuid)
+            user = User.objects.get(id=user_uuid.id)
         except User.DoesNotExist:
             return self.queryset.none()  # Return an empty queryset if user not found
 
         # Apply role-based filtering based on the user instance
-        if user.role=="teacher":
+        if user.role == "teacher":
             return self.queryset.filter(teacher=user)
-        elif user.role=="student":
-            
-            return self.queryset.filter(student_lists=user)
+        elif user.role == "student":
+            return self.queryset.filter(students_lists=user)
+
 
         return self.queryset.none()
 
     @action(detail=True, methods=['get'], url_path='')
     def get_session_details_from_id(self, request, pk=None):
         """Retrieve details of a specific session by session ID."""
+        return  Response({'error': 'Session not found'}, status=404)
+
         try:
             session = self.get_object()
             serializer = self.get_serializer(session)
-            return Response(serializer.data)
+            
+            return  Response({'error': 'Session not found'}, status=404)
         except SessionsModel.DoesNotExist:
             return Response({'error': 'Session not found'}, status=404)
 
     @action(detail=False, methods=['get'], url_path='teacher-sessions')
     def teacher_sessions(self, request):
         """List all sessions created by the authenticated teacher."""
-        if request.user.is_teacher:
-            teacher_sessions = self.queryset.filter(teacher=request.user)
-            serializer = self.get_serializer(teacher_sessions, many=True)
-            return Response(serializer.data)
+        try:
+            if request.user.role=="teacher":
+                teacher_sessions = self.queryset.filter(teacher=request.user)
+                serializer = self.get_serializer(teacher_sessions, many=True)
+                return Response(serializer.data)
+        except:
+            return Response({'error': 'unable to retrieve '}, status=403)
         return Response({'error': 'Only teachers can view this list'}, status=403)
-
-    @action(detail=False, methods=['get'], url_path='available')
-    def available(self, request):
-        """Retrieve a list of available sessions with open spots."""
-        available_sessions = self.queryset.filter(
-            booked_students__lt=models.F('max_students')
-        )
-        serializer = self.get_serializer(available_sessions, many=True)
-        return Response(serializer.data)
 
     def perform_create(self, serializer):
         """Save the session with the current user as the teacher."""
-        if self.request.user.role=="teacher":
+        if self.request.user.role == "teacher":
             serializer.save(teacher=self.request.user)
         else:
             return Response({'error': 'Only teachers can create sessions'}, status=403)
@@ -97,14 +105,14 @@ class SessionBookingViewSet(viewsets.ModelViewSet):
             "studentID":token,
             "SessionsID":token,
         }
-    
+
     Response
         {
             "status":"OK","FULL","ERROR"
         }
     ```
         adding to db handled in serverside
-        
+
     **PUT** `api/bookings/update` with auth token and session_id
         auth_token==teacher
         session_id == session_id
@@ -134,35 +142,7 @@ class SessionBookingViewSet(viewsets.ModelViewSet):
             serializer.save(student=self.request.user)
         else:
             raise serializers.ValidationError("SessionsModel is fully booked.")
-    def create_session(self, request, *args, **kwargs):
-
-        session_id = request.data.get('session_id')
-        session = SessionsModel.objects.get(id=session_id)
-        if session.booked_students < session.max_students:
-            session.booked_students += 1
-            session.save()
-            booking = SessionBooking.objects.create(
-                session=session,
-                student=request.user
-            )
-            serializer = self.get_serializer(booking)
-            return Response(serializer.data)
-        return Response({"error": "Session is fully booked."}, status=400)
-    
-
-    def make_booking(self, request, *args, **kwargs):
-        session_id = request.data.get('session_id')
-        session = SessionsModel.objects.get(id=session_id)
-        if session.booked_students < session.max_students:
-            session.booked_students += 1
-            session.save()
-            booking = SessionBooking.objects.create(
-                session=session,
-                student=request.user
-            )
-            serializer = self.get_serializer(booking)
-            return Response(serializer.data)
-        return Response({"error": "Session is fully booked."}, status=400)
+ 
 
     @action(detail=False, methods=['post'])
     def cancel(self, request, *args, **kwargs):

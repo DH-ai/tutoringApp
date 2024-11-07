@@ -1,5 +1,37 @@
 from rest_framework import serializers
+
+from auth_users.models import User
 from .models import SessionsModel, SessionBooking
+
+class CreateSessionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = SessionsModel
+        fields = ['id','teacher', 'title', 'description', 'date',
+                  'start_time', 'end_time', 'max_students']
+        
+    def validate(self, data):
+        # print(data)
+        user_id = data['teacher']
+        
+        # check if the date and time coincide with another session
+        start_time = data['start_time']
+
+        date = data['date']
+        overlapping_sessions = SessionsModel.objects.filter(
+            teacher=user_id,
+            date=date,
+            start_time=start_time,
+
+        )
+        
+       
+        # print(overlapping_sessions)
+        if overlapping_sessions.exists():
+            print("overlapping_sessions")
+            raise serializers.ValidationError(
+                "You have another session during this time")
+        
+        return data
 
 
 class SessionSerializer(serializers.ModelSerializer):

@@ -2,7 +2,7 @@ from rest_framework_simplejwt.views import TokenRefreshView
 from django.urls import path
 
 from .views import (UserRegisterView, UserLoginView, UserLogoutView, UserProfileView,
-                    UserProfileUpdateView, UserDeleteView, TeacherListView)
+                    UserProfileUpdateView, UserDeleteView, TeacherListView,IsLoggedIn)
 
 urlpatterns = [
     path('profile/', UserProfileView.as_view(), name='user-profile'),
@@ -23,4 +23,5 @@ urlpatterns = [
     
     path('refresh/', TokenRefreshView.as_view(),
          name='token_refresh', ),
+         path('isLoggedin/', IsLoggedIn.as_view(), name='is-loggedin'),
 ]

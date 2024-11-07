@@ -63,13 +63,21 @@ class UserLoginView(APIView):
     POST /api/users/login
     """
     permission_classes = [AllowAny]
+    
 
 
     def post(self, request, *args, **kwargs):
         serializer = UserLoginSerializer(data=request.data)
         if serializer.is_valid():
-            user = authenticate(username=serializer.validated_data['username'], 
+            try:
+                user = authenticate(username=serializer.validated_data['username'], 
                                  password=serializer.validated_data['password'])
+            
+            except:
+                return Response({'error': 'Invalid credentials'}, status=status.HTTP_401_UNAUTHORIZED)
+                
+                
+            
             if user:
                 login(request, user)
                 refresh = RefreshToken.for_user(user)
@@ -91,6 +99,15 @@ class UserLogoutView(APIView):
         logout(request)
         return Response({'message': 'Logged out successfully'}, status=status.HTTP_200_OK)
 
+class IsLoggedIn(APIView):
+    """
+    POST /api/users/isLoggedin
+    """
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request, *args, **kwargs):
+        return Response({'message': 'YES'}, status=status.HTTP_200_OK)
+    
 class UserProfileUpdateView(APIView):
     """
     PUT /api/users/profile
