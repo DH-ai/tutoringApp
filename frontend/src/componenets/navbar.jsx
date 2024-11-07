@@ -6,13 +6,18 @@ import { Link } from "react-router-dom";
 
 const Navbar = () => {
   const [isLogged, setIsLogged] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   useEffect(() => {
     const token = localStorage.getItem("access_token");
     if (token) {
       setIsLogged(true);
+      // setIsMenuOpen(true);
     }
   }, []);
-
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
+    console.log(isMenuOpen);
+  };
   return (
     <>
       <nav className=" bg-white">
@@ -40,16 +45,25 @@ const Navbar = () => {
           </div>
           <div className="flex-1  ">
             <div className="flex items-center justify-end h-full">
+            <p href="/" className="text-2xl font-semibold capitalize mx-4">
+              Welcome {
+                localStorage.getItem("role") === "student"
+                  ? "Student"
+                  : localStorage.getItem("role") === "teacher" 
+                  ? "Teacher"
+                  : "Guest"
+              }
+            </p>
               {isLogged ? (
+
+
                 <FaUserCircle
                   onClick={() => {
-                    window.location.href =
-                      localStorage.getItem("role") === "student"
-                        ? "/studentDashboard"
-                        : "/teacherDashboard";
+                    toggleMenu();
                   }}
                   className="text-3xl text-blue-600 hover:cursor-pointer mx-6 "
-                />
+                /> 
+
               ) : (
                 <div className="space-x-2 mr-6 my-2">
                   <button className="border border-3 border-blue-500 rounded-md transition-all text-xl bg-blue-100 text-blue-500 px-2 py-1 hover:bg-blue-500 hover:text-white">
@@ -57,6 +71,16 @@ const Navbar = () => {
                   </button>
                 </div>
               )}
+              {isMenuOpen && (
+                    <div className="absolute top-12 right-10 backdrop-blur-md  p-2 text-lg font-semibold text-black space-y-2 border-black border-2  rounded-md ">
+                      <ul>
+                        <li><Link href="/" className="hover:text-white">Home</Link></li>
+                        <li><Link to='/dashboard' className="hover:text-white">Dashboard</Link></li>
+                        <li><Link href="/Logout" className="hover:text-white">Logout</Link></li>
+                        
+                      </ul>
+                    </div>
+                  )}
             </div>
           </div>
         </div>

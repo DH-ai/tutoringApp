@@ -5,7 +5,7 @@ import studentimg from "./assets/student.png";
 import Navbar from "./componenets/navbar";
 import { Link } from "react-router-dom";
 import Footer from "./componenets/footer";
-import ProfileSection from "./componenets/ProfileSection";
+// import ProfileSection from "./componenets/ProfileSection";
 const HomePage = () => {
   return (
     <>

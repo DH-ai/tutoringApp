@@ -22,14 +22,13 @@ import api from "./utils/authService";
 // Example of getting auth token
 
 const Main = () => {
-  const [authToken, setAuthToken] = useState(null);
+  const [authToken, setAuthToken] = useState(false);
 
   useEffect(() => {
-    setAuthToken({
-      access_token: localStorage.getItem("access_token"),
-      refresh_token: localStorage.getItem("refresh_token"),
-    });
-    console.log(authToken);
+    if (localStorage.getItem("access_token")) {
+      setAuthToken(true);
+    }
+    // console.log(authToken);
   }, []);
 
   // useEffect(() => {
@@ -103,8 +102,12 @@ const Main = () => {
         </Route>
         <Route element={<ProtectedRoutes authToken={authToken} />}>
           <Route path="/loginSuccess" element={<LoginSuccess />} />
-          <Route path="/student-dashboard" element={<StudentDashboard />} />
-          <Route path="/teacher-dashboard" element={<TeacherDashboard />} />
+          <Route path="/dashboard" element={
+            localStorage.getItem("role") === "student"
+              ? <StudentDashboard />
+              : <TeacherDashboard />
+          } />
+          {/* <Route path="/dashboard" element={<TeacherDashboard />} /> */}
         </Route>
       </Routes>
     </BrowserRouter>

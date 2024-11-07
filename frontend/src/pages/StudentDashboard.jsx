@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import ProfileSection from "../componenets/ProfileSection";
+// import ProfileSection from "../componenets/ProfileSection";
 import SessionsSection from "../componenets/SessionsSection";
 import MessagesSection from "../componenets/MessageSection";
 import AccountSettings from "../componenets/AccountSettings";
@@ -122,7 +122,7 @@ function StudentDashboard() {
         <div className=" border-gray-200 rounded-lg border-2 w-52  p-4 bg-white shadow-lg">
           {activeTab === "dashboard" && (
             <>
-              <ProfileSection prop={profile.username} />
+              {/* <ProfileSection prop={profile.username} /> */}
               {/* <SessionsSection sessions={sessions} /> */}
               
               
