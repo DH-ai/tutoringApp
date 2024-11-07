@@ -7,7 +7,7 @@ class SessionSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = SessionsModel
-        fields = ['teacher', 'title', 'description', 'date',
+        fields = ['id','teacher', 'title', 'description', 'date',
                   'start_time', 'end_time', 'max_students', 'available_spots',]
 
     def get_available_spots(self, obj):
@@ -17,7 +17,7 @@ class SessionSerializer(serializers.ModelSerializer):
 class SessionBookingSerializer(serializers.ModelSerializer):
     class Meta:
         model = SessionBooking
-        fields = ['session_id', 'user_id']  # user_id -> student_id
+        fields = ['id', 'sessionid','student']  # user_id -> student_id
 
     def validate(self, data):
         user_id = data['user_id']
@@ -47,10 +47,10 @@ class SessionBookingSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         # Create a new booking with the validated data
-        session = SessionsModel.objects.get(id=validated_data['session_id'])
-        user_id = validated_data['user_id']
+        session = SessionsModel.objects.get(id=validated_data['sessionid'])
+        user_id = validated_data['userid']
         booking = SessionBooking.objects.create(
-            user_id=user_id,
-            session=session
+            studentid=user_id,
+            sessionid=session
         )
         return booking

@@ -11,7 +11,7 @@ class SessionsModel(models.Model):
     teacher = models.ForeignKey(
         User, on_delete=models.CASCADE, related_name='teacher_sessions_slot')
     title = models.CharField(max_length=255)
-    description = models.TextField()
+    description = models.TextField(blank=True)
     date = models.DateField(default='2024-11-04')
     start_time = models.TimeField()
     end_time = models.TimeField()
@@ -29,13 +29,15 @@ class SessionsModel(models.Model):
 
 
 class SessionBooking(models.Model):
-    session = models.ForeignKey(
+    id = models.UUIDField(default=uuid.uuid4, editable=False,
+                          unique=True, primary_key=True)
+    sessionid = models.ForeignKey(
         SessionsModel, on_delete=models.CASCADE, related_name='bookings')
-    student = models.ForeignKey(
+    studentid = models.ForeignKey(
         User, on_delete=models.CASCADE, related_name='student_booking')
 
     class Meta:
-        unique_together = ('session', 'student')  # Prevent duplicate bookings
+        unique_together = ('sessionid', 'studentid')  # Prevent duplicate bookings
 
     def __str__(self):
         return f"Booking for {self.session} by {self.student.username}"

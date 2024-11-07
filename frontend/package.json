@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "main.jsx",
   "type": "module",
-
+  
   "scripts": {
     "dev": "vite",
     "preview": "vite preview",

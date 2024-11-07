@@ -1,13 +1,21 @@
+from django.shortcuts import get_object_or_404
 from rest_framework import viewsets, permissions, serializers
 from rest_framework.response import Response
 from rest_framework.decorators import action
-
+from auth_users.models import User
 from django.db import models
-
+from auth_users.serializers import UserSerializer
 from .models import SessionsModel, SessionBooking
 from .serializers import SessionSerializer, SessionBookingSerializer
 
 
+class CreateSessionView(viewsets.ViewSet):
+    def create(self,request):
+        serializer = SessionSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=400)
 
 
 class SessionViewSet(viewsets.ModelViewSet):
@@ -24,16 +32,26 @@ class SessionViewSet(viewsets.ModelViewSet):
     permission_classes = [permissions.IsAuthenticated]
 
     def get_queryset(self):
-        """Customize queryset based on the role of the authenticated user."""
-        user = self.request.user
-        if user.is_teacher:
-            return self.queryset.filter(teacher=user)
-        elif user.is_student:
-            return self.queryset.filter(booked_students=user)
-        return self.queryset.none()  # For other users, return an empty queryset
+        """Customize queryset based on the role of the authenticated user UUID."""
+        user_uuid = self.request.user
 
-    @action(detail=True, methods=['get'], url_path='details')
-    def get_session_details(self, request, pk=None):
+        # Fetch the user instance associated with the UUID
+        try:
+            user = User.objects.get(id=user_uuid)
+        except User.DoesNotExist:
+            return self.queryset.none()  # Return an empty queryset if user not found
+
+        # Apply role-based filtering based on the user instance
+        if user.role=="teacher":
+            return self.queryset.filter(teacher=user)
+        elif user.role=="student":
+            
+            return self.queryset.filter(student_lists=user)
+
+        return self.queryset.none()
+
+    @action(detail=True, methods=['get'], url_path='')
+    def get_session_details_from_id(self, request, pk=None):
         """Retrieve details of a specific session by session ID."""
         try:
             session = self.get_object()
@@ -62,7 +80,7 @@ class SessionViewSet(viewsets.ModelViewSet):
 
     def perform_create(self, serializer):
         """Save the session with the current user as the teacher."""
-        if self.request.user.is_teacher:
+        if self.request.user.role=="teacher":
             serializer.save(teacher=self.request.user)
         else:
             return Response({'error': 'Only teachers can create sessions'}, status=403)
@@ -101,6 +119,8 @@ class SessionBookingViewSet(viewsets.ModelViewSet):
         auth_token==teacher
         session_id == session_id
         same removes the session for the teacher too and from its students list too
+
+
     '''
     queryset = SessionBooking.objects.all()
     serializer_class = SessionBookingSerializer
@@ -114,6 +134,21 @@ class SessionBookingViewSet(viewsets.ModelViewSet):
             serializer.save(student=self.request.user)
         else:
             raise serializers.ValidationError("SessionsModel is fully booked.")
+    def create_session(self, request, *args, **kwargs):
+
+        session_id = request.data.get('session_id')
+        session = SessionsModel.objects.get(id=session_id)
+        if session.booked_students < session.max_students:
+            session.booked_students += 1
+            session.save()
+            booking = SessionBooking.objects.create(
+                session=session,
+                student=request.user
+            )
+            serializer = self.get_serializer(booking)
+            return Response(serializer.data)
+        return Response({"error": "Session is fully booked."}, status=400)
+    
 
     def make_booking(self, request, *args, **kwargs):
         session_id = request.data.get('session_id')

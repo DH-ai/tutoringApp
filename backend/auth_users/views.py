@@ -125,7 +125,7 @@ class TeacherListView(generics.ListAPIView):
     permission_classes = [AllowAny]
 
     def get_queryset(self):
-        return User.objects.filter(role="teacher" | "TEACHER")
+        return User.objects.filter(role="teacher")
     
     
 """

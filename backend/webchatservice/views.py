@@ -7,6 +7,10 @@ from .models import Session,Message
 from .serializers import WebChatSessionSerializer,MessageSerializer
 from auth_users.models import User
 import uuid
+
+
+
+
 class StartSessionView(APIView):
     """
     Creates a new WebChat session between a student and a teacher if not already created.

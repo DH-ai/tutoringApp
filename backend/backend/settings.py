@@ -92,7 +92,7 @@ REST_FRAMEWORK = {
         'rest_framework.permissions.IsAuthenticated',
     ),
 }
-ALLOWED_HOSTS = ['your-azure-app-name.azurewebsites.net','tutoringapp-production.up.railway.app']
+# ALLOWED_HOSTS = ['your-azure-app-name.azurewebsites.net','tutoringapp-production.up.railway.app',"127.0.0.1"]
 
 ROOT_URLCONF = 'backend.urls'
 STATIC_URL = 'static/'
