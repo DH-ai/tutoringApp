@@ -1,8 +1,9 @@
 {
   "name": "frontend",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "main.jsx",
   "type": "module",
+  
   "scripts": {
     "dev": "vite",
     "preview": "vite preview",
@@ -16,7 +17,6 @@
     "test": "echo \"No test specified\" && exit 1",
     "eject": "echo \"No eject script available\" && exit 1"
   },
-  "homepage": "https://dh-ai.github.io/tutoringApp",
   "keywords": [],
   "author": "",
   "license": "ISC",

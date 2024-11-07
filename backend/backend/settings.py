@@ -92,6 +92,7 @@ REST_FRAMEWORK = {
         'rest_framework.permissions.IsAuthenticated',
     ),
 }
+ALLOWED_HOSTS = ['your-azure-app-name.azurewebsites.net']
 
 ROOT_URLCONF = 'backend.urls'
 STATIC_URL = 'static/'
