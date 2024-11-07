@@ -58,16 +58,25 @@ class SessionBookingViewSet(viewsets.ModelViewSet):
     
     Response
         {
-            "status":"OK"
+            "status":"OK","FULL","ERROR"
         }
     ```
         adding to db handled in serverside
-    
+        
+    **PUT** `api/bookings/update` with auth token and session_id
+        auth_token==teacher
+        session_id == session_id
+        ```
+            details to be changed in the session
+        ```
+        implmenting notificaiton to the students
     **DELETE** `api/bookings/cancel` with auth token
         auth_token==student
         sessino_id == session_id
         deletes
-    
+        auth_token==teacher
+        session_id == session_id
+        same removes the session for the teacher too and from its students list too
     '''
     queryset = SessionBooking.objects.all()
     serializer_class = SessionBookingSerializer
