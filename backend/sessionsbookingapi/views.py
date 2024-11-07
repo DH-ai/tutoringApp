@@ -8,40 +8,64 @@ from .models import SessionsModel, SessionBooking
 from .serializers import SessionSerializer, SessionBookingSerializer
 
 
+
+
 class SessionViewSet(viewsets.ModelViewSet):
-    '''
+    """
     **GET** `api/sessions/list` with auth token 
-        auth token == student 
-            returns the students sesions list
-        auth token == teacher 
-            returns the sessions created by the teacher
-        user_token == teacher
-            returns the session created by the teacher 
-        user_token == student 
-            an empty json
-    **GET** 'api/sessions/<uuid:sessionsID>' - with auth token sessionsif is if of sessionsModel.id
-        returns the session details
-    '''
+        - If auth token belongs to a student, return only sessions booked by the student.
+        - If auth token belongs to a teacher, return only sessions created by the teacher.
+        - If no sessions match, return an empty JSON array.
+
+    **GET** `api/sessions/<uuid:session_id>` - Returns details for the session with specified session_id.
+    """
     queryset = SessionsModel.objects.all()
     serializer_class = SessionSerializer
     permission_classes = [permissions.IsAuthenticated]
-    #
 
-    def perform_create(self, serializer: serializers):
-        serializer.save(teacher=self.request.user)
+    def get_queryset(self):
+        """Customize queryset based on the role of the authenticated user."""
+        user = self.request.user
+        if user.is_teacher:
+            return self.queryset.filter(teacher=user)
+        elif user.is_student:
+            return self.queryset.filter(booked_students=user)
+        return self.queryset.none()  # For other users, return an empty queryset
 
-    @action(detail=False, methods=['get'])
-    def teacher_sessions(self, request, *args, **kwargs):
-        teacher_sessions = self.queryset.filter(teacher=request.user)
-        serializer = self.get_serializer(teacher_sessions, many=True)
-        return Response(serializer.data)
+    @action(detail=True, methods=['get'], url_path='details')
+    def get_session_details(self, request, pk=None):
+        """Retrieve details of a specific session by session ID."""
+        try:
+            session = self.get_object()
+            serializer = self.get_serializer(session)
+            return Response(serializer.data)
+        except SessionsModel.DoesNotExist:
+            return Response({'error': 'Session not found'}, status=404)
 
-    @action(detail=False, methods=['get'])
-    def available(self, request, *args, **kwargs):
+    @action(detail=False, methods=['get'], url_path='teacher-sessions')
+    def teacher_sessions(self, request):
+        """List all sessions created by the authenticated teacher."""
+        if request.user.is_teacher:
+            teacher_sessions = self.queryset.filter(teacher=request.user)
+            serializer = self.get_serializer(teacher_sessions, many=True)
+            return Response(serializer.data)
+        return Response({'error': 'Only teachers can view this list'}, status=403)
+
+    @action(detail=False, methods=['get'], url_path='available')
+    def available(self, request):
+        """Retrieve a list of available sessions with open spots."""
         available_sessions = self.queryset.filter(
-            booked_students__lt=models.F('max_students'))
+            booked_students__lt=models.F('max_students')
+        )
         serializer = self.get_serializer(available_sessions, many=True)
         return Response(serializer.data)
+
+    def perform_create(self, serializer):
+        """Save the session with the current user as the teacher."""
+        if self.request.user.is_teacher:
+            serializer.save(teacher=self.request.user)
+        else:
+            return Response({'error': 'Only teachers can create sessions'}, status=403)
 
 
 class SessionBookingViewSet(viewsets.ModelViewSet):
