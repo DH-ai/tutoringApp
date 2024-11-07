@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "main.jsx",
   "type": "module",
-  
+
   "scripts": {
     "dev": "vite",
     "preview": "vite preview",
@@ -13,7 +13,7 @@
     "build:css": "npx tailwindcss -i ./src/input.css -o ./src/output.css",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d dist",
-    "start": "vite",
+    "start": "vite ",
     "test": "echo \"No test specified\" && exit 1",
     "eject": "echo \"No eject script available\" && exit 1"
   },
