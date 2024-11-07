@@ -71,7 +71,7 @@ class UserLoginView(APIView):
         if serializer.is_valid():
             try:
                 user = authenticate(username=serializer.validated_data['username'], 
-                                 password=serializer.validated_data['password'])
+                                 password=serializer.validated_data['password'],)
             
             except:
                 return Response({'error': 'Invalid credentials'}, status=status.HTTP_401_UNAUTHORIZED)
@@ -83,7 +83,10 @@ class UserLoginView(APIView):
                 refresh = RefreshToken.for_user(user)
                 return Response({
                     'access_token': str(refresh.access_token),
-                    'refresh_token': str(refresh)
+                    'refresh_token': str(refresh),
+                    'user_id': str(user.id),
+                    "role": str(user.role)
+
                 })
             return Response({'error': 'Invalid credentials'}, status=status.HTTP_401_UNAUTHORIZED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

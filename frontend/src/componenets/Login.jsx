@@ -20,6 +20,8 @@ function Login() {
       console.log("Logged in with email");
       localStorage.setItem("access_token", response.data.access_token);
       localStorage.setItem("refresh_token", response.data.refresh_token);
+      localStorage.setItem("username", username);
+      localStorage.setItem("role", response.data.role);
       alert("Logged in successfully");
       window.location.href = "/loginSuccess";
       console.log(response.data);

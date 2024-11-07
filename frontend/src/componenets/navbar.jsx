@@ -18,6 +18,21 @@ const Navbar = () => {
     setIsMenuOpen(!isMenuOpen);
     console.log(isMenuOpen);
   };
+  
+  
+  const Logout = () => {
+    // Clear user data from local storage or cookies
+    localStorage.removeItem("access_token");
+    localStorage.removeItem("refresh_token");
+    localStorage.removeItem("user");
+    localStorage.removeItem("user_id");
+    // Redirect to login page
+    // redirect("/login");
+    window.location.href = "/login";
+    console.log("Logged out");
+  
+  };
+  
   return (
     <>
       <nav className=" bg-white">
@@ -74,9 +89,9 @@ const Navbar = () => {
               {isMenuOpen && (
                     <div className="absolute top-12 right-10 backdrop-blur-md  p-2 text-lg font-semibold text-black space-y-2 border-black border-2  rounded-md ">
                       <ul>
-                        <li><Link href="/" className="hover:text-white">Home</Link></li>
+                        <li><Link to="/" className="hover:text-white">Home</Link></li>
                         <li><Link to='/dashboard' className="hover:text-white">Dashboard</Link></li>
-                        <li><Link href="/Logout" className="hover:text-white">Logout</Link></li>
+                        <li><Link to="/logout" className="hover:text-white" >Logout</Link></li>
                         
                       </ul>
                     </div>
