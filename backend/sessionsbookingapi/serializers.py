@@ -1,12 +1,12 @@
 from rest_framework import serializers
-from .models import Session, SessionBooking
+from .models import SessionsModel, SessionBooking
 
 
 class SessionSerializer(serializers.ModelSerializer):
     available_spots = serializers.SerializerMethodField()
 
     class Meta:
-        model = Session
+        model = SessionsModel
         fields = ['teacher', 'title', 'description', 'date',
                   'start_time', 'end_time', 'max_students', 'available_spots']
 
@@ -25,9 +25,9 @@ class SessionBookingSerializer(serializers.ModelSerializer):
 
         # Check if the session exists
         try:
-            session = Session.objects.get(id=session_id)
-        except Session.DoesNotExist:
-            raise serializers.ValidationError("Session not found")
+            session = SessionsModel.objects.get(id=session_id)
+        except SessionsModel.DoesNotExist:
+            raise serializers.ValidationError("SessionsModel not found")
 
         # Check if the session is fully booked
         if session.bookings.count() >= session.capacity:
@@ -47,7 +47,7 @@ class SessionBookingSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         # Create a new booking with the validated data
-        session = Session.objects.get(id=validated_data['session_id'])
+        session = SessionsModel.objects.get(id=validated_data['session_id'])
         user_id = validated_data['user_id']
         booking = SessionBooking.objects.create(
             user_id=user_id,

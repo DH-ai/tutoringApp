@@ -4,11 +4,11 @@ from rest_framework.decorators import action
 
 from django.db import models
 
-from .models import Session, SessionBooking
+from .models import SessionsModel, SessionBooking
 from .serializers import SessionSerializer, SessionBookingSerializer
 
 class SessionViewSet(viewsets.ModelViewSet):
-    queryset = Session.objects.all()
+    queryset = SessionsModel.objects.all()
     serializer_class = SessionSerializer
     permission_classes = [permissions.IsAuthenticated]
 
@@ -39,7 +39,7 @@ class SessionBookingViewSet(viewsets.ModelViewSet):
             session.save()
             serializer.save(student=self.request.user)
         else:
-            raise serializers.ValidationError("Session is fully booked.")
+            raise serializers.ValidationError("SessionsModel is fully booked.")
 
     @action(detail=False, methods=['post'])
     def cancel(self, request, *args, **kwargs):
