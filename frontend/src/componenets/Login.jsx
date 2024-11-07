@@ -8,19 +8,26 @@ function Login() {
 
   async function handleEmailLogin() {
     try {
-      const response = await api.post("/api/auth/login", {
-        username,
-        password,
+      if (username.includes("@") || username.includes("." || username.includes("-"))) {
+        setError("Please enter a valid username");
+        return;
+      }
+      const response = await api.post("http://localhost:8000/api/users/login/", {
+        "username": username,
+        "password": password,
       });
-      alert(response.data); // Assuming response.data contains a message
+      // Assuming response.data contains a message
       console.log("Logged in with email");
-      localStorage.setItem("access_token", response.data.token);
-      localStorage.setItem("refresh_token", response.data.refreshToken);
+      localStorage.setItem("access_token", response.data.access_token);
+      localStorage.setItem("refresh_token", response.data.refresh_token);
+      alert("Logged in successfully");
+      // window.location.href = "/";
+      console.log(response.data);
 
       // You might want to redirect to a different page or set a user session here
     } catch (error) {
       console.error("Email login error:", error.message);
-      setError(error.message);
+      setError("Retry login");
     }
   }
 

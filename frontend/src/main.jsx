@@ -76,26 +76,26 @@ const Main = () => {
   //       </Routes>
 
   return (
-    
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<App />} />
-          <Route path="/services" element={<ServiceWorker />} />
-          <Route path="/about" element={<AboutUs />} />
-          <Route path="/contact" element={<ContactUs />} />
-          <Route path="/profile" element={<Profile />} />
-          
-          {/* <Route element={<LoginRoute authToken={authToken} />}>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<App />} />
+        <Route path="/services" element={<ServiceWorker />} />
+        <Route path="/about" element={<AboutUs />} />
+        <Route path="/contact" element={<ContactUs />} />
+        <Route path="/profile" element={<Profile />} /> {/* i have a querry string in api side to get profiles how to give query to the profile and then use it fetch the profile deatils reactec query and context maybe */}
+
+        <Route element={<LoginRoute authToken={authToken} />}>
             <Route path="/registration" element={<RegistrationPage />} />
             <Route path="/registerSuccess" element={<RegisterSuccess />} />
             <Route path="/login" element={<Login />} />
-          </Route>
+        </Route>
+        <Route element={<ProtectedRoutes authToken={authToken} />}>
+          <Route path="/studentDashboard" element={<StudentDashboard /> } />
+          <Route path="/teacherDashboard" element={<TeacherDashboard />} />
+        </Route>
 
-          {/* Routes for Authenticated Users */}
-          
-        </Routes>
-      </BrowserRouter>
-  
+      </Routes>
+    </BrowserRouter>
   );
 };
 

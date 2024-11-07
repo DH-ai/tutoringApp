@@ -18,10 +18,9 @@ const Registration = () => {
     zipcode: "",
     country: "",
     bio: "",
-    is_student: false,
-    is_teacher: false,
     subjectsInterested: "",
     role: "student",
+    
     // Default to student
   });
 
@@ -31,13 +30,7 @@ const Registration = () => {
       ...prevData,
       [name]: value,
     }));
-    if (name === "role") {
-      setFormData((prevData) => ({
-        ...prevData,
-        is_student: value === "student",
-        is_teacher: value === "teacher",
-      }));
-    }
+    
   };
 
   const handleSubmit = async (e) => {
@@ -45,13 +38,14 @@ const Registration = () => {
     // Add form submission logic here, such as an API call
     try {
       const response = await api.post(
-        "http://127.0.0.1:8000/api/auth/register",
+        "http://127.0.0.1:8000/api/users/register/",
         formData,
       );
       const { access, refresh } = response.data;
       localStorage.setItem("access_token", access);
       localStorage.setItem("refresh_token", refresh);
-      alert("Registration successful.");
+      localStorage.setItem("user_id", formData.username);
+      localStorage.setItem("role", formData.role);
       // Redirect to dashboard
         window.location.href = "/";
     } catch (error) {
@@ -352,7 +346,16 @@ const Registration = () => {
                 Register
               </button>
             </div>
+          
           </form>
+          <div>
+            <p className="text-center text-gray-700 text-sm mt-4">
+              Already have an account?{" "}
+              <a href="/login" className="text-blue-600 hover:underline">
+                Login
+              </a>
+            </p>
+          </div>
         </div>
       </div>
     </>
