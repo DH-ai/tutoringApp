@@ -8,10 +8,10 @@ class SessionSerializer(serializers.ModelSerializer):
     class Meta:
         model = SessionsModel
         fields = ['teacher', 'title', 'description', 'date',
-                  'start_time', 'end_time', 'max_students', 'available_spots']
+                  'start_time', 'end_time', 'max_students', 'available_spots',]
 
     def get_available_spots(self, obj):
-        return obj.max_students - obj.bookings.count()
+        return obj.max_students - obj.booked_students
 
 
 class SessionBookingSerializer(serializers.ModelSerializer):

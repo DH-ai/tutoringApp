@@ -40,6 +40,8 @@ class SessionBookingViewSet(viewsets.ModelViewSet):
             serializer.save(student=self.request.user)
         else:
             raise serializers.ValidationError("SessionsModel is fully booked.")
+    
+
 
     @action(detail=False, methods=['post'])
     def cancel(self, request, *args, **kwargs):

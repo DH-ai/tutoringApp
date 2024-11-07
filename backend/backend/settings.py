@@ -42,7 +42,7 @@ INSTALLED_APPS = [
     'sessionsbookingapi.apps.SessionsbookingapiConfig',
     'rest_framework_simplejwt.token_blacklist',
     'webchatservice.apps.WebchatserviceConfig',
-    'server',
+
     'corsheaders',
     'rest_framework',
     'rest_framework.authtoken',
