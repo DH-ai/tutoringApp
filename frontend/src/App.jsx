@@ -5,8 +5,16 @@ import studentimg from "./assets/student.png";
 import Navbar from "./componenets/navbar";
 import { Link } from "react-router-dom";
 import Footer from "./componenets/footer";
+import { useEffect } from "react";
 // import ProfileSection from "./componenets/ProfileSection";
+
 const HomePage = () => {
+  useEffect(() => {
+    const accessToken = localStorage.getItem("access_token");
+    if (accessToken) {
+      window.location.href = "/";
+    }
+  })
   return (
     <>
       <div className="min-h-screen bg-gray-100 text-gray-800">
@@ -48,7 +56,7 @@ const HomePage = () => {
             </h2>
 
             <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
-              
+              {/* Teacher Profile fetch them from the backend and show in carousel*/}
             </div>
           </div>
         </section>
