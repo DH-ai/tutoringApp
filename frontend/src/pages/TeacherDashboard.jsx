@@ -21,7 +21,7 @@ function TeacherDashboard() {
     const fetchProfile = async () => {
       try {
         const response = await axios.get(
-          base+"/api/users/profile",
+          base+"/api/users/profile/",
           {
             headers: {
               Authorization: `Bearer ${localStorage.getItem("access_token") || ""}`,
