@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Navbar from "../componenets/navbar";
-const base = process.env.REACT_APP_BACKEND_URL;
+const base = import.meta.env.REACT_APP_BACKEND_URL;
+
 // import { CountryDropdown, StateDropdown } from "react-country-state-city";
 import api from "../utils/authService";
 

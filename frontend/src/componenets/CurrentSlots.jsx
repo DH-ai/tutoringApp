@@ -1,7 +1,8 @@
 import axios from 'axios';
 import React from 'react';
 import { useEffect,useState } from 'react';
-const base = process.env.REACT_APP_BACKEND_URL;
+
+const base = import.meta.env.REACT_APP_BACKEND_URL;
 function CurrentSlots() {
   const [sessions, setSessions] = useState([]);
 

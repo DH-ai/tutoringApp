@@ -8,7 +8,8 @@ import Navbar from "../componenets/navbar";
 import axios from "axios";
 import Footer from "../componenets/footer";
 
-const base = process.env.REACT_APP_BACKEND_URL;
+const base = import.meta.env.REACT_APP_BACKEND_URL;
+
 function TeacherDashboard() {
   const [activeTab, setActiveTab] = useState("dashboard");
   const [profile, setProfile] = useState(null);

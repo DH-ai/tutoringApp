@@ -6,7 +6,8 @@ import AccountSettings from "../componenets/AccountSettings";
 import Navbar from "../componenets/navbar";
 import axios from "axios";
 import { useEffect } from "react";
-const base = process.env.REACT_APP_BACKEND_URL;
+const base = import.meta.env.REACT_APP_BACKEND_URL;
+
 // api/users/profile with authtoken to get user profile
 // api/users/refreshtoken with authtoken to refresh token
 // api/sessions/ with authtoken to get user sessions

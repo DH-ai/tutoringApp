@@ -12,7 +12,8 @@ import ChatApp from "../pages/chatApp";
 // user name
 // slots
 // chating
-const base=process.env.REACT_APP_BACKEND_URL;
+const base = import.meta.env.REACT_APP_BACKEND_URL;
+
 // can be copied pase for student also
 
 function Profile() {

@@ -3,7 +3,8 @@ import "tailwindcss/tailwind.css";
 import axios from "axios";
 import CurrentSlots from "./CurrentSlots";
 
-const base = process.env.REACT_APP_BACKEND_URL;
+const base = import.meta.env.REACT_APP_BACKEND_URL;
+
 function SlotSettings() {
   const [newSlot, setNewSlot] = useState({
     title: "",

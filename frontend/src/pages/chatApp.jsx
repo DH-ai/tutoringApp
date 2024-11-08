@@ -5,7 +5,8 @@ import MessageInput from "./MessageInput";
 import MessageView from "../componenets/messageView";
 import { createChatSession, sendMessage, getMessages } from "../utils/webchat";
 
-const base = process.env.REACT_APP_BACKEND_URL;
+const base = import.meta.env.REACT_APP_BACKEND_URL;
+
 
 const ChatApp = (userid, role) => {
   const [sessionId, setSessionId] = useState(null);

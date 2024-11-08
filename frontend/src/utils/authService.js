@@ -1,7 +1,8 @@
 import axios from "axios";
+const base = import.meta.env.REACT_APP_BACKEND_URL;
 
 const api = axios.create({
-  baseURL: "http://localhost:8000",
+  baseURL: base,
   withCredentials: true, // Send cookies along with requests
 });
 
