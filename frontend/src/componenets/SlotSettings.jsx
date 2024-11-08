@@ -3,7 +3,7 @@ import "tailwindcss/tailwind.css";
 import axios from "axios";
 import CurrentSlots from "./CurrentSlots";
 
-const base = import.meta.env.REACT_APP_BACKEND_URL;
+const base = "https://tutoringapp-production.up.railway.app";
 
 function SlotSettings() {
   const [newSlot, setNewSlot] = useState({
@@ -103,7 +103,7 @@ function SlotSettings() {
 
 
 
-        
+
       </div>
       <div className="bg-white p-4 rounded-lg shadow-md">
         <h3 className="text-xl font-semibold text-blue-600 mb-2">
