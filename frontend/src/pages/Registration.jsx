@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Navbar from "../componenets/navbar";
-const base = import.meta.env.REACT_APP_BACKEND_URL;
+const base = "https://tutoringapp-production.up.railway.app";
 
 // import { CountryDropdown, StateDropdown } from "react-country-state-city";
 import api from "../utils/authService";

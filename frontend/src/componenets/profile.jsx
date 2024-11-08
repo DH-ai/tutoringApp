@@ -7,7 +7,7 @@ import axios from "axios";
 import { useParams } from "react-router-dom";
 import { FaEnvelope } from "react-icons/fa";
 import ChatApp from "../pages/chatApp";
-
+import { BookSession } from './booksession'
 // getting data from the backend
 // user name
 // slots
@@ -23,7 +23,7 @@ function Profile() {
 
   useEffect(() => {
     const fetchProfile = async () => {
-      var url = base+"/api/users/profile/";
+      var url = base + "/api/users/profile/";
       if (userid !== undefined) {
         url = url + userid;
       }
@@ -40,12 +40,9 @@ function Profile() {
         // console.log(response.data);
       } catch (error) {
         if ((error.response.data.code = `token_not_valid`)) {
-          const res = await axios.post(
-            base+"/api/users/refresh/",
-            {
-              refresh: localStorage.getItem("refresh_token"),
-            },
-          );
+          const res = await axios.post(base + "/api/users/refresh/", {
+            refresh: localStorage.getItem("refresh_token"),
+          });
           localStorage.setItem("access_token", res.data.access);
         }
 
@@ -56,7 +53,7 @@ function Profile() {
     // console.log(profile);
     const fetchSessions = async () => {
       try {
-        const response = await axios.get(base+"/api/sessions/", {
+        const response = await axios.get(base + "/api/sessions/", {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("access_token")}`,
           },
@@ -65,7 +62,7 @@ function Profile() {
       } catch (error) {
         console.error("Error fetching sessions:", error);
       }
-    }
+    };
     fetchSessions();
   }, []);
 
@@ -158,12 +155,30 @@ function Profile() {
 
             {/* Available Slots */}
             <div className="mt-8 p-4 w-1/3  h-full ">
+              {sessions.map((session) => (
+                <div
+                  className="bg-white rounded-lg shadow-lg p-4 mt-4"
+                  key={session.id}
+                >
+                  <h3 className="text-xl font-semibold text-blue-600 mb-2">
+                    {session.title}
+                  </h3>
+                  <p className="text-gray-500">{session.description}</p>
+                  <p className="text-gray-500">
+                    {session.date} | {session.startTime} - {session.endTime}
+                  </p>
+                  <p className="text-gray-500">
+                    {session.students.length}/{session.maxStudents} Students
+                  </p>
 
-              
+                  <span className="text-blue-500 hover:underline" onClick={BookSession}>
+                    Book Session 
+                  </span>
+                </div>
+              ))}
             </div>
           </div>
           {/* Frequented Communities */}
-          
         </div>
 
         {/* Chat */}
@@ -178,7 +193,7 @@ function Profile() {
           </div>
           <div className="h-4/5 p-4 ">
             <div className="h-4/5 border-t border-gray-900 ">
-             <ChatApp userid={profile.id} role={profile.role} />              
+              <ChatApp userid={profile.id} role={profile.role} />
             </div>
           </div>
         </div>

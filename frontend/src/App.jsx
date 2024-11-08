@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 import Footer from "./componenets/footer";
 import { useEffect,useState } from "react";
 // import ProfileSection from "./componenets/ProfileSection";
-const base = import.meta.env.REACT_APP_BACKEND_URL;
+const base = "https://tutoringapp-production.up.railway.app";
 
 const HomePage = () => {
   const [teachers, setTeachers] = useState([]);

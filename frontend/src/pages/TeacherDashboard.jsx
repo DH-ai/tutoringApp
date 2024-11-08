@@ -8,7 +8,7 @@ import Navbar from "../componenets/navbar";
 import axios from "axios";
 import Footer from "../componenets/footer";
 
-const base = import.meta.env.REACT_APP_BACKEND_URL;
+const base = "https://tutoringapp-production.up.railway.app";
 
 function TeacherDashboard() {
   const [activeTab, setActiveTab] = useState("dashboard");

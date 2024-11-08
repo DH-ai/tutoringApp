@@ -1,5 +1,5 @@
 import axios from "axios";
-const base = import.meta.env.REACT_APP_BACKEND_URL;
+const base = "https://tutoringapp-production.up.railway.app";
 
 const api = axios.create({
   baseURL: base,

@@ -6,7 +6,7 @@ import AccountSettings from "../componenets/AccountSettings";
 import Navbar from "../componenets/navbar";
 import axios from "axios";
 import { useEffect } from "react";
-const base = import.meta.env.REACT_APP_BACKEND_URL;
+const base = "https://tutoringapp-production.up.railway.app";
 
 // api/users/profile with authtoken to get user profile
 // api/users/refreshtoken with authtoken to refresh token
