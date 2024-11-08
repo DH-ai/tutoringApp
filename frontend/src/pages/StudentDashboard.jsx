@@ -16,6 +16,7 @@ const base = "https://tutoringapp-production.up.railway.app";
 function StudentDashboard() {
   const [activeTab, setActiveTab] = useState("dashboard");
   const [profile, setProfile] = useState(null);
+  const [loading, setLoading] = useState(true);
   const [sessions, setSessions] = useState([]);
   const [messages, setMessages] = useState([]);
 
@@ -35,7 +36,7 @@ function StudentDashboard() {
       } catch (error) {
         try {
           const response = await axios.post(
-            "http://localhost:8000/api/users/refresh/",
+            base+"/api/users/refresh/",
             {
               
                 refresh: `${localStorage.getItem("refresh_token")}`,
@@ -56,7 +57,7 @@ function StudentDashboard() {
     const fetchSessions = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:8000/api/sessions/",
+          base+"/api/sessions/",
           {
             headers: {
               Authorization: `Bearer ${localStorage.getItem("access_token")}`,
@@ -69,21 +70,6 @@ function StudentDashboard() {
       }
     };
 
-    const fetchMessages = async () => {
-      try {
-        const response = await axios.get(
-          "http://localhost:8000/api/messages/",
-          {
-            headers: {
-              Authorization: `Bearer ${localStorage.getItem("access_token")}`,
-            },
-          },
-        );
-        setMessages(response.data);
-      } catch (error) {
-        console.error("Error fetching messages:", error);
-      }
-    };
 
     fetchProfile();
     fetchSessions();
