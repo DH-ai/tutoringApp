@@ -37,6 +37,7 @@ const Registration = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     // Add form submission logic here, such as an API call
+    console.log(base+"/api/users/register/");
     try {
       const response = await api.post(
         base+"/api/users/register/",

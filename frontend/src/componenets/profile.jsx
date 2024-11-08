@@ -12,12 +12,12 @@ import ChatApp from "../pages/chatApp";
 // user name
 // slots
 // chating
-const base = import.meta.env.REACT_APP_BACKEND_URL;
 
 // can be copied pase for student also
 
 function Profile() {
   const [profile, setProfile] = useState([]);
+  const [sessions, setSessions] = useState([]);
   const { userid } = useParams();
   const [ismessage, setMessage] = useState(false);
 
@@ -54,6 +54,19 @@ function Profile() {
     };
     fetchProfile();
     // console.log(profile);
+    const fetchSessions = async () => {
+      try {
+        const response = await axios.get(base+"/api/sessions/", {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("access_token")}`,
+          },
+        });
+        setSessions(response.data);
+      } catch (error) {
+        console.error("Error fetching sessions:", error);
+      }
+    }
+    fetchSessions();
   }, []);
 
   return (
@@ -145,56 +158,12 @@ function Profile() {
 
             {/* Available Slots */}
             <div className="mt-8 p-4 w-1/3  h-full ">
-              <h1 className="text-gray-600 font-semibold">Available Slots</h1>
-              <div>
-                {/* A for loop looping through available slots and plotting them */}
 
-                {[
-                  "Monday",
-                  "Tuesday",
-                  "Wednesday",
-                  "Thursday",
-                  "Friday",
-                  "Saturday",
-                  "Sunday",
-                ].map((day) => (
-                  <div
-                    className="flex justify-between items-center mt-2 border-t border-gray-300  transform hover:scale-x-105  hover:border-blue-500 transition-transform duration-00"
-                    key={day}
-                  >
-                    <p className="text-gray-500">{day}</p>
-                    <p className="text-gray-500">10:00 AM - 12:00 PM</p>
-                  </div>
-                ))}
-              </div>
+              
             </div>
           </div>
           {/* Frequented Communities */}
-          <div className="mt-8 p-4 border-t border-gray-200">
-            <h3 className="text-gray-600 font-semibold">Reivews</h3>
-            <div className="flex justify-evenly items-center space-x-2 mt-2">
-              <div>
-                <h4>Student A</h4>
-                <p>
-                  “Great teacher! Very clear explanations and patient with
-                  questions.”
-                </p>
-              </div>
-              <div>
-                <h4>Student B</h4>
-                <p>
-                  “Learned a lot from the sessions, especially in advanced
-                  topics.”
-                </p>
-              </div>
-              <div>
-                <h4>Student C</h4>
-                <p>
-                  “Makes difficult topics easy to understand. Highly recommend!”
-                </p>
-              </div>
-            </div>
-          </div>
+          
         </div>
 
         {/* Chat */}

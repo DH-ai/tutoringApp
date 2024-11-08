@@ -66,7 +66,7 @@ const HomePage = () => {
             <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
               {/* Teacher Profile fetch them from the backend and show in carousel*/}
               {
-                teachers.map((teacher) => {
+                teachers?.map((teacher) => {
                   return (
                     <div className="bg-white rounded-lg shadow-lg p-4">
                       <div className="flex justify-center">
