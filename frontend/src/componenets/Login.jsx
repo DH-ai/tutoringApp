@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import axios from "axios";
 import api from "../utils/authService"; // Assuming this sends a POST request for registration
 var base = "https://tutoringapp-production.up.railway.app";
 function Login() {
@@ -12,7 +13,7 @@ function Login() {
         setError("Please enter a valid username");
         return;
       }
-      const response = await api.post(base+"/api/users/login/", {
+      const response = await axios.post(base+"/api/users/login/", {
         "username": username,
         "password": password,
       });
