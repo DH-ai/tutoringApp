@@ -23,7 +23,7 @@ function Login() {
       localStorage.setItem("user_id", username);
       localStorage.setItem("role", response.data.role);
       alert("Logged in successfully");
-      window.location.href = "/loginSuccess";
+      // window.location.href = "/loginSuccess";
       console.log(response.data);
 
       // You might want to redirect to a different page or set a user session here
