@@ -43,10 +43,10 @@ const Registration = () => {
         base+"/api/users/register/",
         formData,
       );
-      const { access, refresh } = response.data;
-      localStorage.setItem("access_token", access);
-      localStorage.setItem("refresh_token", refresh);
-      localStorage.setItem("user_id", formData.username);
+      
+      localStorage.setItem("access_token", response.data.access);
+      localStorage.setItem("refresh_token", response.data.refresh);
+      localStorage.setItem("user_id", response.data.user_id);
       localStorage.setItem("role", formData.role);
       // Redirect to dashboard
         window.location.href = "/";
