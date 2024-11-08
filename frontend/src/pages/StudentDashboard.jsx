@@ -34,23 +34,7 @@ function StudentDashboard() {
         setProfile(response.data);
         // console.log(response.data);
       } catch (error) {
-        try {
-          const response = await axios.post(
-            base+"/api/users/refresh/",
-            {
-              
-                refresh: `${localStorage.getItem("refresh_token")}`,
-              
-            },
-          );
-          localStorage.setItem("access_token", response.data.access_token);
-          fetchProfile();
-        } catch (error) {
-          console.error("Error fetching profile:", error);
-          localStorage.removeItem("access_token");
-          localStorage.removeItem("refresh_token");
-          window.location.href = "/login";
-        }
+        console.error("Error fetching profile:", error);
       }
     };
 
