@@ -115,7 +115,8 @@ function SlotSettings() {
         </h3>
         <div>
         {isslot && (
-          <div className="flex justify-between items-center mt-2 border-t border-gray-300  transform hover:scale-x-105  hover:border-blue-500 transition-transform duration-00">
+          
+          <div className="flex justify-between items-center mt-2 border-t border-gray-300    hover:border-blue-500 ">
             <h3 className="text-xl font-semibold text-blue-600 mb-2">
               {newSlot.title}
             </h3>
