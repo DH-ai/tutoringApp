@@ -5,15 +5,23 @@ import studentimg from "./assets/student.png";
 import Navbar from "./componenets/navbar";
 import { Link } from "react-router-dom";
 import Footer from "./componenets/footer";
-import { useEffect } from "react";
+import { useEffect,useState } from "react";
 // import ProfileSection from "./componenets/ProfileSection";
+const base = import.meta.env.REACT_APP_BACKEND_URL;
 
 const HomePage = () => {
+  const [teachers, setTeachers] = useState([]);
   useEffect(() => {
-    const accessToken = localStorage.getItem("access_token");
-    if (accessToken) {
-      window.location.href = "/";
+    const fetchTeachers = async () => {
+      try {
+        const response = await axios.get(base + "/api/users/teachers/");
+        console.log(response.data);
+      } catch (error) {
+        console.error("Error fetching teachers:", error);
+      }
     }
+
+    fetchTeachers();
   })
   return (
     <>
@@ -57,6 +65,31 @@ const HomePage = () => {
 
             <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
               {/* Teacher Profile fetch them from the backend and show in carousel*/}
+              {
+                teachers.map((teacher) => {
+                  return (
+                    <div className="bg-white rounded-lg shadow-lg p-4">
+                      <div className="flex justify-center">
+                        <img
+                          src={teacher.profile_pic}
+                          alt="Teacher"
+                          className="w-24 h-24 object-cover rounded-full"
+                        />
+                      </div>
+                      <div className="text-center mt-4">
+                        <h3 className="text-xl font-semibold">{teacher.name}</h3>
+                        <p className="text-sm text-gray-500">{teacher.subject}</p>
+                        <Link
+                          to={`/profile/${teacher.id}`}
+                          className="text-blue-500 hover:underline"
+                        >
+                          View Profile
+                        </Link>
+                      </div>
+                    </div>
+                  );
+                })
+              }
             </div>
           </div>
         </section>
