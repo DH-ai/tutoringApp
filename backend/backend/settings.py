@@ -64,15 +64,15 @@ MIDDLEWARE = [
 ]
 
 CORS_ALLOWED_ORIGINS = [
-    "http://localhost:5173",  # React frontend (development)
+    'https://frontend-production-40f9.up.railway.app',
 ]
 
 # This is needed in order to allow the frontend to send cookies to the backend.
 CORS_ALLOW_CREDENTIALS = True
-
 CORS_ALLOW_HEADERS = [
     'content-type',
-    'authorization',
+    'authorization',  # If you're sending authorization tokens
+    # any other headers your app uses
 ]
 
 CORS_ALLOW_METHODS = [
@@ -80,7 +80,7 @@ CORS_ALLOW_METHODS = [
     'POST',
     'PUT',
     'DELETE',
-
+    'PATCH',
 ]  # If not specified, all methods will be allowed by default. Needed for the frontend to send requests with methods other than GET and POST.
 
 REST_FRAMEWORK = {

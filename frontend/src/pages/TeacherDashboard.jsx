@@ -80,7 +80,7 @@ function TeacherDashboard() {
     };
 
     fetchProfile();
-    // fetchSessions();
+    fetchSessions();
 
     // fetchMessages();
   }, []);
