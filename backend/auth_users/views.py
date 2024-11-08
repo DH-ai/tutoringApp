@@ -26,6 +26,7 @@ class UserProfileView(generics.RetrieveAPIView):
 
     """
     permission_classes = [AllowAny]
+    serializer_class = UserSerializer
 
     def get(self, request, *args, **kwargs):
         # Get user details based on authenticated user or specific id
