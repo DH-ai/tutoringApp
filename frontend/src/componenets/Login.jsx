@@ -11,10 +11,7 @@ function Login() {
 
   async function handleEmailLogin() {
     try {
-      if (username.includes("@") || username.includes("." || username.includes("-"))) {
-        setError("Please enter a valid username");
-        return;
-      }
+      
       const response = await axios.post(base+"/api/users/login/", {
         "username": username,
         "password": password,
@@ -23,7 +20,7 @@ function Login() {
       console.log("Logged in with email");
       localStorage.setItem("access_token", response.data.access_token);
       localStorage.setItem("refresh_token", response.data.refresh_token);
-      localStorage.setItem("user_id", username);
+      localStorage.setItem("user_id", response.data.user_id);
       localStorage.setItem("role", response.data.role);
       alert("Logged in successfully");
       // window.location.href = "/loginSuccess";
