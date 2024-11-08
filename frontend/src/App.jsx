@@ -8,7 +8,7 @@ import Footer from "./componenets/footer";
 import { useEffect,useState } from "react";
 // import ProfileSection from "./componenets/ProfileSection";
 const base = "https://tutoringapp-production.up.railway.app";
-
+import axios from "axios";
 const HomePage = () => {
   const [teachers, setTeachers] = useState([]);
   useEffect(() => {
