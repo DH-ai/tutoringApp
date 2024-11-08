@@ -159,7 +159,7 @@ function Profile() {
             {/* Available Slots */}
             <div className="mt-8 p-4 w-1/3  h-full ">
               <h2 className="text-gray-800 font-semibold">Available Slots</h2>
-              {sessions.map((session) => (
+              {sessions?.map((session) => (
                 <div
     
                   className="flex justify-between items-center mt-2 border-t border-gray-300  transform hover:scale-x-105  hover:border-blue-500 transition-transform duration-00"
