@@ -1,6 +1,7 @@
 // firebaseService.js
 import{  db  }from './firbaseConfig';
-import firebase from 'firebase/app';
+// import {} from 'firebase/app';
+import {initializeApp} from 'firebase/app';
 
 // Function to create a new chat session
 export const createChatSession = async (studentId, teacherId) => {
@@ -8,7 +9,7 @@ export const createChatSession = async (studentId, teacherId) => {
   const sessionData = {
     studentId,
     teacherId,
-    createdAt: firebase.firestore.FieldValue.serverTimestamp()
+    createdAt: initializeApp.firestore.FieldValue.serverTimestamp()
   };
   await sessionRef.set(sessionData);
   return sessionRef.id;
@@ -20,7 +21,7 @@ export const sendMessage = async (sessionId, senderId, receiverId, message) => {
     senderId,
     receiverId,
     message,
-    timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+    timestamp: initializeApp.firestore.FieldValue.serverTimestamp(),
   };
   const messageRef = db.collection('ChatSessions').doc(sessionId).collection('messages').doc();
   await messageRef.set(messageData);
