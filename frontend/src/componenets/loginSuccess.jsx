@@ -4,11 +4,6 @@ import Navbar  from './navbar';
 import Footer  from './footer';
 
 const LoginSuccess = () => {
-    // const history = useHistory();
-
-    // const goToHomepage = () => {
-    //     history.push('/');
-    // };
 
     return (
         <div>

@@ -3,7 +3,7 @@ import "tailwindcss/tailwind.css";
 import axios from "axios";
 import CurrentSlots from "./CurrentSlots";
 
-
+const base = process.env.REACT_APP_BACKEND_URL;
 function SlotSettings() {
   const [newSlot, setNewSlot] = useState({
     title: "",
@@ -16,7 +16,7 @@ function SlotSettings() {
   const addSessions = async (data) => {
     try {
       const response = await axios.post(
-        "http://localhost:8000/api/sessions/createSession/",
+        base+"/api/sessions/createSession/",
         data,
         {
           headers: {

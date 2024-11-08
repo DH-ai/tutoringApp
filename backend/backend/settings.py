@@ -170,12 +170,12 @@ AUTH_USER_MODEL = 'auth_users.User'
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
 ]
-ASGI_APPLICATION = 'tutorite.asgi.application'
+ASGI_APPLICATION = 'backend.asgi.application'
 SIMPLE_JWT = {
     # Access token valid for 1 hour
-    'ACCESS_TOKEN_LIFETIME': timedelta(hours=1),
+    'ACCESS_TOKEN_LIFETIME': timedelta(days=7),
     # Refresh token valid for 7 days
-    'REFRESH_TOKEN_LIFETIME': timedelta(days=7),
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=30),
     'ROTATE_REFRESH_TOKENS': False,
     'BLACKLIST_AFTER_ROTATION': True,
     'ALGORITHM': 'HS256',
@@ -196,5 +196,3 @@ CHANNEL_LAYERS = {
         },
     },
 }
-
-

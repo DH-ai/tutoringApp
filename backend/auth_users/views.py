@@ -29,11 +29,18 @@ class UserProfileView(generics.RetrieveAPIView):
 
     def get(self, request, *args, **kwargs):
         # Get user details based on authenticated user or specific id
-        user_id = kwargs.get('user_id', None)
+        user_id = kwargs.get('id', None)
+        
+
+        
         if user_id:
-            user = User.objects.filter(id=user_id).first()
+            try:
+                user = User.objects.filter(id=user_id).first()
+            except:
+                return Response({'error': 'User not found'}, status=status.HTTP_404_NOT_FOUND)
         else:
             user = request.user
+  
         if user:
             serializer = UserSerializer(user)
             return Response(serializer.data) 
@@ -54,7 +61,8 @@ class UserRegisterView(generics.CreateAPIView):
             return Response({
                 'access_token': str(refresh.access_token),
                 'refresh_token': str(refresh),
-                'user_id': str(user.id)
+                'user_id': str(user.id),
+                'role': str(user.role)
             })
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 

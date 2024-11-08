@@ -1,7 +1,7 @@
 import axios from 'axios';
 import React from 'react';
 import { useEffect,useState } from 'react';
-
+const base = process.env.REACT_APP_BACKEND_URL;
 function CurrentSlots() {
   const [sessions, setSessions] = useState([]);
 
@@ -10,7 +10,7 @@ function CurrentSlots() {
     const fetchsessions = async () => { 
       try {
         const response = await axios.get(
-          "http://localhost:8000/api/sessions/",
+          base+"/api/sessions/",
           {
             headers: {
               Authorization: `Bearer ${localStorage.getItem("access_token")}`,

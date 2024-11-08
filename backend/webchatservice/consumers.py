@@ -1,10 +1,11 @@
 # chat/consumers.py
 import json
 from channels.generic.websocket import AsyncWebsocketConsumer
-from .models import Message
 from datetime import datetime
 
+
 class ChatConsumer(AsyncWebsocketConsumer):
+    from .models import Message
     async def connect(self):
         self.session_id = self.scope['url_route']['kwargs']['session_id']
         self.room_group_name = f'chat_{self.session_id}'
@@ -16,7 +17,8 @@ class ChatConsumer(AsyncWebsocketConsumer):
         )
 
         # Send previous messages to the WebSocket
-        previous_messages = Message.objects.filter(session_id=self.session_id).order_by('timestamp')
+        previous_messages = Message.objects.filter(
+            session_id=self.session_id).order_by('timestamp')
         messages = [{"message_id": msg.id, "sender_id": msg.sender_id, "receiver_id": msg.receiver_id,
                      "message": msg.message, "timestamp": msg.timestamp.isoformat()} for msg in previous_messages]
 

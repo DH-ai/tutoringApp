@@ -4,34 +4,43 @@ import Footer from "./footer";
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import axios from "axios";
+import { useParams } from "react-router-dom";
+import { FaEnvelope } from "react-icons/fa";
+import ChatApp from "../pages/chatApp";
 
 // getting data from the backend
 // user name
 // slots
 // chating
+const base=process.env.REACT_APP_BACKEND_URL;
 // can be copied pase for student also
 
 function Profile() {
   const [profile, setProfile] = useState([]);
+  const { userid } = useParams();
+  const [ismessage, setMessage] = useState(false);
 
   useEffect(() => {
     const fetchProfile = async () => {
+      var url = base+"/api/users/profile/";
+      if (userid !== undefined) {
+        url = url + userid;
+      }
+      console.log(url);
+
       try {
-        const response = await axios.get(
-          "http://localhost:8000/api/users/profile",
-          {
-            headers: {
-              Authorization: `Bearer ${localStorage.getItem("access_token") || ""}`,
-            },
+        const response = await axios.get(url, {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("access_token") || ""}`,
           },
-        );
+        });
         // console.log(1);
         setProfile(response.data);
         // console.log(response.data);
       } catch (error) {
         if ((error.response.data.code = `token_not_valid`)) {
           const res = await axios.post(
-            "http://localhost:8000/api/users/refresh/",
+            base+"/api/users/refresh/",
             {
               refresh: localStorage.getItem("refresh_token"),
             },
@@ -43,6 +52,7 @@ function Profile() {
       }
     };
     fetchProfile();
+    // console.log(profile);
   }, []);
 
   return (
@@ -55,7 +65,7 @@ function Profile() {
         <div className="bg-white rounded-lg shadow-lg p-6 w-full  mt-32  ">
           <div className="">
             {/* Profile Image  and name */}
-            <div className="md:flex">
+            <div className="md:flex ">
               <div className="relative w-36 h-36 ml-20 mr-10 -mt-20 rounded-full border-4 border-white overflow-hidden">
                 <img
                   src="https://via.placeholder.com/150" // Replace with an actual image URL
@@ -67,6 +77,13 @@ function Profile() {
               <h2 className="text-2xl font-semibold ">
                 {profile?.first_name}{" "}
               </h2>
+              <div className="px-2 mt-1 ml-7">
+                <FaEnvelope
+                  size={30}
+                  className="text-blue-300 hover:text-blue-500 transition-all "
+                  onClick={() => setMessage(!ismessage)}
+                />
+              </div>
             </div>
           </div>
           <div className="md:flex md:justify-between">
@@ -175,6 +192,23 @@ function Profile() {
                   “Makes difficult topics easy to understand. Highly recommend!”
                 </p>
               </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Chat */}
+        <div
+          className={`fixed bottom-2 right-2 w-1/3 h-1/3 bg-blue-100 border-2 border-gray-700 ${ismessage ? "block" : "hidden"} rounded-lg shadow-xl transition-all`}
+        >
+          <div className="flex justify-between items-center p-4">
+            <h3 className="text-gray-600 font-semibold">Chat</h3>
+            <button onClick={() => setMessage(!ismessage)}>
+              <span className="text-red-500">Close</span>
+            </button>
+          </div>
+          <div className="h-4/5 p-4 ">
+            <div className="h-4/5 border-t border-gray-900 ">
+             <ChatApp userid={profile.id} role={profile.role} />              
             </div>
           </div>
         </div>

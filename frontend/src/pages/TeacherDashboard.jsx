@@ -7,6 +7,8 @@ import AccountSettings from "../componenets/AccountSettings";
 import Navbar from "../componenets/navbar";
 import axios from "axios";
 import Footer from "../componenets/footer";
+
+const base = process.env.REACT_APP_BACKEND_URL;
 function TeacherDashboard() {
   const [activeTab, setActiveTab] = useState("dashboard");
   const [profile, setProfile] = useState(null);
@@ -18,7 +20,7 @@ function TeacherDashboard() {
     const fetchProfile = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:8000/api/users/profile",
+          base+"/api/users/profile",
           {
             headers: {
               Authorization: `Bearer ${localStorage.getItem("access_token") || ""}`,
@@ -30,7 +32,7 @@ function TeacherDashboard() {
       } catch (error) {
         if ((error.response.data.code = `token_not_valid`)) {
           const res = await axios.post(
-            "http://localhost:8000/api/users/refresh/",
+            base+"/api/users/refresh/",
             {
               refresh: localStorage.getItem("refresh_token"),
             },
@@ -47,7 +49,7 @@ function TeacherDashboard() {
     const fetchSessions = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:8000/api/sessions/",
+          base+"/api/sessions/",
           {
             headers: {
               Authorization: `Bearer ${localStorage.getItem("access_token")}`,
@@ -63,7 +65,7 @@ function TeacherDashboard() {
     const fetchMessages = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:8000/api/messages/",
+          base+"/api/messages/",
           {
             headers: {
               Authorization: `Bearer ${localStorage.getItem("access_token")}`,

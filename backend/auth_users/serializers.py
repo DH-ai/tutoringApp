@@ -65,9 +65,8 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ('id','username', 'email', 'first_name', 'last_name', 'phone', 'address', 'city', 'state', 'zipcode',
-                  # Expose fields as needed
-                  'country', 'bio', 'subjectsInterested', 'role', 'profile_picture')
+        fields = ('id','username', 'email', 'first_name', 'last_name', 'phone', 'address', 'city', 'state', 'zipcode','country', 'bio', 'subjectsInterested', 'role', 'profile_picture')
+    
 
 
 class UserUpdateSerializer(serializers.ModelSerializer):
@@ -101,9 +100,7 @@ class UserUpdateSerializer(serializers.ModelSerializer):
 class UserPublicProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ('id', 'username', 'email', 'first_name', 'last_name', 'phone', 'address', 'city', 'bio',
-                  # Adjust fields to show in public profile
-                  'subjectsInterested', 'role', 'profile_picture')
+        fields = ('id', 'username', 'email', 'first_name', 'last_name', 'phone', 'address', 'city', 'bio',              'subjectsInterested', 'role', 'profile_picture')
 
 
 class UserLoginSerializer(serializers.Serializer):

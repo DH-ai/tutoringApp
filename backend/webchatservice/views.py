@@ -52,6 +52,11 @@ class StartSessionView(APIView):
         
         return Response(serializer.data, status=status.HTTP_201_CREATED)
 
+
+
+
+
+
 class SendMessageView(CreateAPIView):
     queryset = Message.objects.all()
     serializer_class = MessageSerializer

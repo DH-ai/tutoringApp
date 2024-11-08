@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Navbar from "../componenets/navbar";
-
+const base = process.env.REACT_APP_BACKEND_URL;
 // import { CountryDropdown, StateDropdown } from "react-country-state-city";
 import api from "../utils/authService";
 
@@ -38,7 +38,7 @@ const Registration = () => {
     // Add form submission logic here, such as an API call
     try {
       const response = await api.post(
-        "http://127.0.0.1:8000/api/users/register/",
+        base+"/api/users/register/",
         formData,
       );
       const { access, refresh } = response.data;

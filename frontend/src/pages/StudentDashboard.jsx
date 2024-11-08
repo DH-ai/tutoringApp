@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 // import ProfileSection from "../componenets/ProfileSection";
 import SessionsSection from "../componenets/SessionsSection";
-import MessagesSection from "../componenets/MessageSection";
+// import MessagesSection from "../componenets/MessageSection";
 import AccountSettings from "../componenets/AccountSettings";
 import Navbar from "../componenets/navbar";
 import axios from "axios";
 import { useEffect } from "react";
+const base = process.env.REACT_APP_BACKEND_URL;
 // api/users/profile with authtoken to get user profile
 // api/users/refreshtoken with authtoken to refresh token
 // api/sessions/ with authtoken to get user sessions
@@ -21,7 +22,7 @@ function StudentDashboard() {
     const fetchProfile = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:8000/api/users/profile",
+          base+"/api/users/profile",
           {
             headers: {
               Authorization: `Bearer ${localStorage.getItem("access_token")}`,

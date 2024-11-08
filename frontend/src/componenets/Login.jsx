@@ -12,7 +12,7 @@ function Login() {
         setError("Please enter a valid username");
         return;
       }
-      const response = await api.post("http://localhost:8000/api/users/login/", {
+      const response = await api.post(base+"/api/users/login/", {
         "username": username,
         "password": password,
       });
@@ -20,7 +20,7 @@ function Login() {
       console.log("Logged in with email");
       localStorage.setItem("access_token", response.data.access_token);
       localStorage.setItem("refresh_token", response.data.refresh_token);
-      localStorage.setItem("username", username);
+      localStorage.setItem("user_id", username);
       localStorage.setItem("role", response.data.role);
       alert("Logged in successfully");
       window.location.href = "/loginSuccess";
@@ -66,6 +66,7 @@ function Login() {
           <button
             type="submit"
             className="w-full p-2 mt-2 text-white bg-blue-600 rounded-md hover:bg-blue-700"
+            
           >
             Submit
           </button>

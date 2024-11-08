@@ -18,6 +18,7 @@ import LoginSuccess from "./componenets/loginSuccess";
 // import { AuthProvider, useAuth } from "./utils/authcontext";
 import api from "./utils/authService";
 import Logout from "./componenets/logout";
+import ChatApp from "./pages/chatApp"
 // import api from './utils/api';
 
 // Example of getting auth token
@@ -94,7 +95,10 @@ const Main = () => {
         <Route path="/services" element={<ServiceWorker />} />
         <Route path="/about" element={<AboutUs />} />
         <Route path="/contact" element={<ContactUs />} />
-        <Route path="/profile/:userId" element={<Profile />} />{" "}
+        <Route path="/profile/:userid" element={<Profile />} />
+        <Route path="/profile" element={<Profile />} />
+        <Route path="/chatTest" element={<ChatApp />} />
+
         {/* i have a querry string in api side to get profiles how to give query to the profile and then use it fetch the profile deatils reactec query and context maybe */}
         <Route element={<LoginRoute authToken={authToken} />}>
           <Route path="/registration" element={<RegistrationPage />} />
