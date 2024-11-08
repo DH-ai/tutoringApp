@@ -8,29 +8,26 @@ import { useParams } from "react-router-dom";
 import { FaEnvelope } from "react-icons/fa";
 import ChatApp from "../pages/chatApp";
 
-
 const base = "https://tutoringapp-production.up.railway.app";
 const BookSession = async (sessionID) => {
-    data = {
-        "sessionID": sessionID,
-        "studentID": localStorage.getItem("user_id"),
-    }
-    try{
-        const response = await axios.post(
-            base+"/api/sessions/createSession/",
-            data,
-            {
-                headers: {
-                    Authorization: `Bearer ${localStorage.getItem("access_token")}`,
-                },
-            },
-        );
-        
-    }   
-    catch(error){
-        console.error("Error adding sessions:", error);
-    }
-}
+  data = {
+    sessionID: sessionID,
+    studentID: localStorage.getItem("user_id"),
+  };
+  try {
+    const response = await axios.post(
+      base + "/api/sessions/createSession/",
+      data,
+      {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("access_token")}`,
+        },
+      },
+    );
+  } catch (error) {
+    console.error("Error adding sessions:", error);
+  }
+};
 // can be copied pase for student also
 
 function Profile() {
@@ -45,16 +42,14 @@ function Profile() {
       if (userid !== undefined) {
         url = url + userid;
       }
-      console.log(base+"/api/users/profile/"+userid);
+      console.log(base + "/api/users/profile/" + userid);
 
       try {
-        const response = await axios.get(base+"/api/users/profile/"+userid);
+        const response = await axios.get(base + "/api/users/profile/" + userid);
         // console.log(1);
         setProfile(response.data);
         console.log(response.data);
       } catch (error) {
-        
-
         console.error("Error fetching profile:", error);
       }
     };
@@ -63,9 +58,7 @@ function Profile() {
     const fetchSessions = async () => {
       try {
         const response = await axios.get(base + "/api/sessions/session/", {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("access_token")}`,
-          },
+          user: `${localStorage.getItem("")}`,
         });
         setSessions(response.data);
       } catch (error) {
@@ -140,8 +133,7 @@ function Profile() {
                   <div>
                     {/* A for loop looping through available slots and plotting them */}
 
-                    {profile?.subjectsInterested
-                    }
+                    {profile?.subjectsInterested}
                   </div>
                 )}
               </div>
@@ -152,7 +144,6 @@ function Profile() {
               <h2 className="text-gray-800 font-semibold">Available Slots</h2>
               {sessions?.map((session) => (
                 <div
-    
                   className="flex justify-between items-center mt-2 border-t border-gray-300  transform hover:scale-x-105  hover:border-blue-500 transition-transform duration-00"
                   key={session.id}
                 >
@@ -167,10 +158,13 @@ function Profile() {
                     {session.students.length}/{session.maxStudents} Students
                   </p>
 
-                  <span className="text-blue-500 hover:underline" onClick={()=>{
-                    BookSession(session.id);
-                  }}>
-                    Book Session 
+                  <span
+                    className="text-blue-500 hover:underline"
+                    onClick={() => {
+                      BookSession(session.id);
+                    }}
+                  >
+                    Book Session
                   </span>
                 </div>
               ))}
