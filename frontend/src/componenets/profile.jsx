@@ -58,7 +58,7 @@ function Profile() {
     const fetchSessions = async () => {
       try {
         const response = await axios.get(base + "/api/sessions/session/", {
-          user: `${localStorage.getItem("")}`,
+          user: `${localStorage.getItem("user_id")}`,
         });
         setSessions(response.data);
       } catch (error) {
