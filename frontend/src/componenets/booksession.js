@@ -1,5 +1,5 @@
 import axios from "axios"
-
+const base = "https://tutoringapp-production.up.railway.app";
 const BookSession = async (sessionID) => {
     data = {
         "sessionID": sessionID,
@@ -16,7 +16,7 @@ const BookSession = async (sessionID) => {
             },
         );
         
-    }
+    }   
     catch(error){
         console.error("Error adding sessions:", error);
     }

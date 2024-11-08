@@ -131,23 +131,8 @@ function Profile() {
                   <div>
                     {/* A for loop looping through available slots and plotting them */}
 
-                    {[
-                      "Monday",
-                      "Tuesday",
-                      "Wednesday",
-                      "Thursday",
-                      "Friday",
-                      "Saturday",
-                      "Sunday",
-                    ].map((day) => (
-                      <div
-                        className="flex justify-between items-center mt-2 border-t border-gray-300  transform hover:scale-x-105  hover:border-blue-500 transition-transform duration-00"
-                        key={day}
-                      >
-                        <p className="text-gray-500">{day}</p>
-                        <p className="text-gray-500">10:00 AM - 12:00 PM</p>
-                      </div>
-                    ))}
+                    {profile?.subjectsInterested
+                    }
                   </div>
                 )}
               </div>
@@ -155,9 +140,11 @@ function Profile() {
 
             {/* Available Slots */}
             <div className="mt-8 p-4 w-1/3  h-full ">
+              <h2 className="text-gray-800 font-semibold">Available Slots</h2>
               {sessions.map((session) => (
                 <div
-                  className="bg-white rounded-lg shadow-lg p-4 mt-4"
+    
+                  className="flex justify-between items-center mt-2 border-t border-gray-300  transform hover:scale-x-105  hover:border-blue-500 transition-transform duration-00"
                   key={session.id}
                 >
                   <h3 className="text-xl font-semibold text-blue-600 mb-2">
@@ -171,7 +158,9 @@ function Profile() {
                     {session.students.length}/{session.maxStudents} Students
                   </p>
 
-                  <span className="text-blue-500 hover:underline" onClick={BookSession}>
+                  <span className="text-blue-500 hover:underline" onClick={()=>{
+                    BookSession(session.id);
+                  }}>
                     Book Session 
                   </span>
                 </div>
