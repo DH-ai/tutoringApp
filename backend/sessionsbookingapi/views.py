@@ -40,7 +40,7 @@ class SessionViewSet(viewsets.ModelViewSet):
     """
     queryset = SessionsModel.objects.all()
     serializer_class = SessionSerializer
-    permission_classes = [permissions.IsAuthenticated]
+    # permission_classes = [permissions.IsAuthenticated]
 
     def get_queryset(self):
         """Customize queryset based on the role of the authenticated user UUID."""
@@ -74,7 +74,7 @@ class SessionViewSet(viewsets.ModelViewSet):
         except SessionsModel.DoesNotExist:
             return Response({'error': 'Session not found'}, status=404)
 
-    @action(detail=False, methods=['get'], url_path='teacher-sessions')
+    @action(detail=False, methods=['get'], url_path='x`')
     def teacher_sessions(self, request):
         """List all sessions created by the authenticated teacher."""
         try:
