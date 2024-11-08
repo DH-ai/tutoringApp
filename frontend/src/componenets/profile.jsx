@@ -45,10 +45,10 @@ function Profile() {
       if (userid !== undefined) {
         url = url + userid;
       }
-      console.log(url);
+      console.log(base+"/api/users/profile/"+userid);
 
       try {
-        const response = await axios.get(url, {
+        const response = await axios.get(base+"/api/users/profile/"+userid, {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("access_token")}`,
           },
