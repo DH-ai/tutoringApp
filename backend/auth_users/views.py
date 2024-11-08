@@ -25,12 +25,12 @@ class UserProfileView(generics.RetrieveAPIView):
     GET /api/users/profile/{id}
 
     """
-    permission_classes = [IsAuthenticated]
+    permission_classes = [AllowAny]
 
     def get(self, request, *args, **kwargs):
         # Get user details based on authenticated user or specific id
         user_id = kwargs.get('id', None)
-        
+
         
 
         
