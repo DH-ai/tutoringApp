@@ -31,6 +31,7 @@ class UserProfileView(generics.RetrieveAPIView):
         # Get user details based on authenticated user or specific id
         user_id = kwargs.get('id', None)
         
+        
 
         
         if user_id:
