@@ -7,12 +7,35 @@ import axios from "axios";
 import { useParams } from "react-router-dom";
 import { FaEnvelope } from "react-icons/fa";
 import ChatApp from "../pages/chatApp";
-import { BookSession } from './booksession'
 // getting data from the backend
 // user name
 // slots
 // chating
+import axios from "axios"
 
+
+const base = "https://tutoringapp-production.up.railway.app";
+const BookSession = async (sessionID) => {
+    data = {
+        "sessionID": sessionID,
+        "studentID": localStorage.getItem("user_id"),
+    }
+    try{
+        const response = await axios.post(
+            base+"/api/sessions/createSession/",
+            data,
+            {
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem("access_token")}`,
+                },
+            },
+        );
+        
+    }   
+    catch(error){
+        console.error("Error adding sessions:", error);
+    }
+}
 // can be copied pase for student also
 
 function Profile() {
