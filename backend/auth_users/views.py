@@ -60,6 +60,7 @@ class UserRegisterView(generics.CreateAPIView):
         if serializer.is_valid():
             user = serializer.save()
             refresh = RefreshToken.for_user(user)
+            print(refresh)
             return Response({
                 'access_token': str(refresh.access_token),
                 'refresh_token': str(refresh),

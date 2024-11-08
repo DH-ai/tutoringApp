@@ -14,6 +14,7 @@ function SlotSettings() {
     endTime: "",
     maxStudents: "",
   });
+  const [isslot, slot] = useState(false);
 
   const addSessions = async (data) => {
     try {
@@ -32,7 +33,10 @@ function SlotSettings() {
   };
   const handleAddSlot = () => {
     console.log(newSlot);
+    slot(true);
+    
     addSessions(newSlot);
+
     
   };
 
@@ -110,7 +114,23 @@ function SlotSettings() {
           Existing Slots
         </h3>
         <div>
-          <CurrentSlots />
+        {isslot && (
+          <div className="flex justify-between items-center mt-2 border-t border-gray-300  transform hover:scale-x-105  hover:border-blue-500 transition-transform duration-00">
+            <h3 className="text-xl font-semibold text-blue-600 mb-2">
+              {newSlot.title}
+            </h3>
+            <p className="text-gray-500">{newSlot.description}</p>
+            <p className="text-gray-500">
+              {newSlot.date} | {newSlot.startTime} - {newSlot.endTime}
+            </p>
+            <p className="text-gray-500">
+              0/{newSlot.maxStudents} Students
+            </p>
+
+
+          </div>
+        )}
+          
         </div>
       </div>
     </div>
