@@ -52,7 +52,7 @@ function StudentDashboard() {
 
     const fetchSessions = async () => {
       try {
-        const response = await axios.get(base + "/api/sessions/", {
+        const response = await axios.get(base + "/api/sessions/session", {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("access_token")}`,
           },
