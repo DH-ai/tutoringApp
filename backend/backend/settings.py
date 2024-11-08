@@ -24,9 +24,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-s4=o%8vo*(!-o*^xfr5ore_%5s=-q+wm()b-rm7@*i0hlpo_p$'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+# ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -92,7 +92,7 @@ REST_FRAMEWORK = {
         'rest_framework.permissions.IsAuthenticated',
     ),
 }
-# ALLOWED_HOSTS = ['your-azure-app-name.azurewebsites.net','tutoringapp-production.up.railway.app',"127.0.0.1"]
+ALLOWED_HOSTS = ['tutorite.azurewebsites.net','tutoringapp-production.up.railway.app']
 
 ROOT_URLCONF = 'backend.urls'
 STATIC_URL = 'static/'
