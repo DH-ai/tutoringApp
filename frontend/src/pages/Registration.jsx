@@ -52,7 +52,7 @@ const Registration = () => {
         window.location.href = "/";
     } catch (error) {
       console.error("Error registering user:", error.response.data);
-      alert("Registration failed.");
+      
     }
   };
 
