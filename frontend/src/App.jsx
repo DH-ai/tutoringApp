@@ -15,6 +15,7 @@ const HomePage = () => {
     const fetchTeachers = async () => {
       try {
         const response = await axios.get(base + "/api/users/teachers/");
+        setTeachers(response.data);
         console.log(response.data);
       } catch (error) {
         console.error("Error fetching teachers:", error);
