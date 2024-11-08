@@ -64,7 +64,7 @@ class SessionViewSet(viewsets.ModelViewSet):
     @action(detail=True, methods=['get'], url_path='')
     def get_session_details_from_id(self, request, pk=None):
         """Retrieve details of a specific session by session ID."""
-        return  Response({'error': 'Session not found'}, status=404)
+        # return  Response({'error': 'Session not found'}, status=404)
 
         try:
             session = self.get_object()
