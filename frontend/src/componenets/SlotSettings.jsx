@@ -14,6 +14,7 @@ function SlotSettings() {
     endTime: "",
     maxStudents: "",
   });
+
   const addSessions = async (data) => {
     try {
       const response = await axios.post(
@@ -42,17 +43,20 @@ function SlotSettings() {
         <h3 className="text-xl font-semibold text-blue-600 mb-2">
           Add a New Slot
         </h3>
+
+
+
         <input
           type="text"
           placeholder="Title"
-          value={newSlot.title}
+          value={newSlot?.title}
           onChange={(e) => setNewSlot({ ...newSlot, title: e.target.value })}
           className="w-full p-2 mb-2 border border-blue-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
         />
         <input
           type="text"
           placeholder="Description"
-          value={newSlot.description}
+          value={newSlot?.description}
           onChange={(e) =>
             setNewSlot({ ...newSlot, description: e.target.value })
           }
@@ -96,6 +100,10 @@ function SlotSettings() {
         >
           Add Slot
         </button>
+
+
+
+        
       </div>
       <div className="bg-white p-4 rounded-lg shadow-md">
         <h3 className="text-xl font-semibold text-blue-600 mb-2">
