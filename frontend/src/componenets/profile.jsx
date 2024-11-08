@@ -48,14 +48,10 @@ function Profile() {
       console.log(base+"/api/users/profile/"+userid);
 
       try {
-        const response = await axios.get(base+"/api/users/profile/"+userid, {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("access_token")}`,
-          },
-        });
+        const response = await axios.get(base+"/api/users/profile/"+userid);
         // console.log(1);
         setProfile(response.data);
-        // console.log(response.data);
+        console.log(response.data);
       } catch (error) {
         
 
