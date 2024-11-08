@@ -24,7 +24,7 @@ function TeacherDashboard() {
           base+"/api/users/profile",
           {
             headers: {
-              Authorization: `Bearer ${localStorage.getItem("access_token") || ""}`,
+              Authorization: `Bearer ${localStorage.getItem("access_token")}`,
             },
           },
         );
