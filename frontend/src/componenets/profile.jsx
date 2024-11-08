@@ -7,11 +7,6 @@ import axios from "axios";
 import { useParams } from "react-router-dom";
 import { FaEnvelope } from "react-icons/fa";
 import ChatApp from "../pages/chatApp";
-// getting data from the backend
-// user name
-// slots
-// chating
-import axios from "axios"
 
 
 const base = "https://tutoringapp-production.up.railway.app";
