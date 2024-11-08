@@ -50,19 +50,14 @@ function Profile() {
       try {
         const response = await axios.get(url, {
           headers: {
-            Authorization: `Bearer ${localStorage.getItem("access_token") || ""}`,
+            Authorization: `Bearer ${localStorage.getItem("access_token")}`,
           },
         });
         // console.log(1);
         setProfile(response.data);
         // console.log(response.data);
       } catch (error) {
-        if ((error.response.data.code = `token_not_valid`)) {
-          const res = await axios.post(base + "/api/users/refresh/", {
-            refresh: localStorage.getItem("refresh_token"),
-          });
-          localStorage.setItem("access_token", res.data.access);
-        }
+        
 
         console.error("Error fetching profile:", error);
       }
