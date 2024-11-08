@@ -71,15 +71,11 @@ const HomePage = () => {
                   return (
                     <div className="bg-white rounded-lg shadow-lg p-4">
                       <div className="flex justify-center">
-                        <img
-                          src={teacher.profile_pic}
-                          alt="Teacher"
-                          className="w-24 h-24 object-cover rounded-full"
-                        />
+                        {teacher?.bio}
                       </div>
                       <div className="text-center mt-4">
-                        <h3 className="text-xl font-semibold">{teacher.name}</h3>
-                        <p className="text-sm text-gray-500">{teacher.subject}</p>
+                        <h3 className="text-xl font-semibold">{teacher.first_name}</h3>
+                        <p className="text-sm text-gray-500">{teacher.subjectInterested}</p>
                         <Link
                           to={`/profile/${teacher.id}`}
                           className="text-blue-500 hover:underline"
