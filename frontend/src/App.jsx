@@ -59,7 +59,7 @@ const HomePage = () => {
 
         {/* Teacher & Student Profiles */}
         <section className="bg-gray-200 py-10">
-          <div className="container mx-auto px-4">
+          <div className="container mx-auto px-4b">
             <h2 className="text-3xl font-bold text-center mb-6">
               Meet the Teachers
             </h2>
